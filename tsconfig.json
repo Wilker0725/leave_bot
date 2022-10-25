@@ -8,6 +8,7 @@
       "@/styles/*": ["styles/*"],
       "@/features/*": ["features/*"],
       "@/utils/*": ["utils/*"],
+      "@/config/*": ["config/*"],
       "@/tmp/*": ["tmp/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
