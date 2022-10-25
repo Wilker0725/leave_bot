@@ -20,7 +20,7 @@ const Header = () => {
               component="div"
             >
               <AssuredWorkloadIcon />
-              <Box ml={1}>Projects Tracker</Box>
+              <Box ml={1}>Dashboard</Box>
             </Typography>
           </Link>
           <Button color="inherit">Login</Button>

@@ -34,14 +34,18 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 type PropsCustomizedTable = {
   children: JSX.Element
+  setPage: (value: number) => void
+  page: number
   ids: string[]
 }
 
 export default function CustomizedTable({
   children,
+  setPage,
+  page,
   ids,
 }: PropsCustomizedTable) {
-  const [page, setPage] = React.useState(0)
+  // const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   // Avoid a layout jump when reaching the last page with empty rows.

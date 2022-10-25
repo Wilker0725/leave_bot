@@ -8,7 +8,7 @@ const initialState = projectsAdapter.getInitialState()
 export const projectsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProjects: builder.query({
-      query: () => "/api/projects",
+      query: (page = 1) => `/api/projects?page=${page}`,
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError
       },
