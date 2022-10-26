@@ -21,23 +21,25 @@ const ProjectsList = () => {
   if (isSuccess) {
     const { ids } = projects
     const tableContent = ids?.length
-      ? ids.map((id) => {
-          return (
-            <>
-              <Project key={id} id={id} />
-            </>
-          )
+      ? ids.map((id: string) => {
+          return <Project key={id} id={id} />
         })
       : null
 
     content = (
-      <CustomizedTables ids={ids} page={page} setPage={setPage}>
+      <CustomizedTables
+        headers={["Project Name", "Sales Number", "Employees", "Employee Id"]}
+        ids={ids}
+        page={page}
+        setPage={setPage}
+      >
         {tableContent}
       </CustomizedTables>
     )
 
     return content
   }
+
   return content
 }
 

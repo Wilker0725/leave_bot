@@ -1,14 +1,54 @@
+import Search from "@/components/Search"
 import ProjectsList from "@/features/projects/ProjectsList"
 import AddBoxIcon from "@mui/icons-material/AddBox"
+import { Button, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import Link from "next/link"
+import { FormEvent, useState } from "react"
+
+type typeFormData = {
+  projectName?: string
+  employeeName?: string
+  employeeId?: string
+  role?: string
+}
 
 const Project = () => {
+  const [formData, setFormData] = useState<typeFormData | object>({})
+
+  const handleSearchInput = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const name = event.target.id.split("-")[0]
+    setFormData({ ...formData, [name]: event.target.value })
+  }
+
+  const handleAutoCompleteInput = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue: string
+  ) => {
+    const name = event.target.id.split("-")[0]
+    setFormData({ ...formData, [name]: newValue })
+  }
+
+  const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log("event: ", event)
+  }
+
   return (
     <Box display={"flex"} flexDirection="column">
-      <Box ml={"auto"}>
+      <Search
+        onChangeText={handleSearchInput}
+        autoCompleteOnChange={handleAutoCompleteInput}
+        onSubmit={handleOnSubmit}
+      />
+      <Box ml={"auto"} mb={2}>
         <Link href="/projects/new">
-          <AddBoxIcon fontSize="large" />
+          <Button variant="outlined">
+            <Typography mr="6px">Create new Project</Typography>
+            <AddBoxIcon fontSize="medium" />
+          </Button>
         </Link>
       </Box>
       <ProjectsList />

@@ -5,10 +5,17 @@ const projectsAdapter = createEntityAdapter({})
 
 const initialState = projectsAdapter.getInitialState()
 
+let totalPages = 0,
+  currentPage = 0,
+  recordCount = 0
+
 export const projectsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProjects: builder.query({
-      query: (page = 1) => `/api/projects?page=${page}`,
+      query: (page = 0) => {
+        currentPage = page
+        return `/api/projects?page=${page + 1}`
+      },
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError
       },
@@ -66,6 +73,8 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
   }),
 })
 
+export { currentPage, recordCount, totalPages }
+
 export const {
   useGetProjectsQuery,
   useAddNewProjectMutation,
@@ -74,7 +83,7 @@ export const {
 } = projectsApiSlice
 
 export const selectProjectsResult =
-  projectsApiSlice.endpoints.getProjects.select()
+  projectsApiSlice.endpoints.getProjects.select(currentPage)
 
 // creates memoized selector
 const selectProjectsData = createSelector(
