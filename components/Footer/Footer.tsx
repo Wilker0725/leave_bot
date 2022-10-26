@@ -12,7 +12,7 @@ const Footer = () => {
           fontSize: "14px",
         }}
       >
-        Developed by Wilker
+        Government Technology Agency (GovTech)
       </Box>
     </Box>
   )
