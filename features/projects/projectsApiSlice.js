@@ -83,7 +83,7 @@ export const {
 } = projectsApiSlice
 
 export const selectProjectsResult =
-  projectsApiSlice.endpoints.getProjects.select(currentPage)
+  projectsApiSlice.endpoints.getProjects.select()
 
 // creates memoized selector
 const selectProjectsData = createSelector(

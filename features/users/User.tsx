@@ -15,7 +15,7 @@ const User: FC<{ id: string }> = ({ id }) => {
   const user: TypeUser = useSelector((state) => {
     return selectUserById(state, id)
   })
-  console.log("user: ", user)
+
   if (user) {
     return (
       <StyledTableRow>

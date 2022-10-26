@@ -1,6 +1,7 @@
 import { store } from "@/app/store"
 import React, { FC, useEffect } from "react"
 import { projectsApiSlice } from "../projects/projectsApiSlice"
+import { usersApiSlice } from "../users/usersApiSlice"
 
 export type AppDispatch = typeof store.dispatch
 
@@ -14,9 +15,11 @@ const Prefetch: FC<PropsPrefetch> = ({ children }) => {
     const projects = store.dispatch(
       projectsApiSlice.endpoints.getProjects.initiate(undefined)
     )
+    const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate(0))
 
     return () => {
       projects.unsubscribe()
+      users.unsubscribe()
     }
   }, [])
   return <>{children}</>
