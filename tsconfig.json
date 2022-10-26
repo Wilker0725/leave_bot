@@ -31,7 +31,8 @@
     "**/*.tsx",
     "app/api/apiSlice.ts",
     "pages/projects/[id].js",
-    "features/projects/projectsApiSlice.js"
+    "features/projects/projectsApiSlice.js",
+    "features/users/usersApiSlice.js"
   ],
   "exclude": ["node_modules"]
 }
