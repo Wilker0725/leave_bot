@@ -45,6 +45,7 @@ model leaves {
   updated_at    DateTime     @db.Timestamp(6)
   leave_type_id Int?
   leave_types   leave_types? @relation(fields: [leave_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_1258ed7339")
+  user   users ? @relation(fields: [user_id], references: [id])
 }
 
 model project_teams {
@@ -98,6 +99,6 @@ model users {
   is_active            Boolean?       @default(true)
   project_teams        project_teams? @relation(fields: [project_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_3ffdfa6c22")
   service_lines        service_lines? @relation(fields: [service_line_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_7871c505a8")
-
+  leaves     leaves[]
   @@index([telegram_ref_id], map: "index_users_on_telegram_ref_id")
 }
