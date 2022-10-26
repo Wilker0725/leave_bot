@@ -7,8 +7,6 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import Link from "next/link"
-import VisibilityIcon from "@mui/icons-material/Visibility"
 import TableFooter from "@mui/material/TableFooter"
 import Pagination from "@/components/Pagination"
 
@@ -37,6 +35,9 @@ type PropsCustomizedTable = {
   setPage: (value: number) => void
   page: number
   ids: string[]
+  headers: string[]
+  minWidth?: number
+  totalPage: number
 }
 
 export default function CustomizedTable({
@@ -44,13 +45,19 @@ export default function CustomizedTable({
   setPage,
   page,
   ids,
+  headers,
+  minWidth,
+  totalPage,
 }: PropsCustomizedTable) {
-  // const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ids.length) : 0
+
+  // totalPage for real data
+  // const emptyRows =
+  //   page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalPage) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -68,13 +75,12 @@ export default function CustomizedTable({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: minWidth || 700 }} aria-label="Table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Project Name</StyledTableCell>
-            <StyledTableCell>Sales Number</StyledTableCell>
-            <StyledTableCell>Employees</StyledTableCell>
-            <StyledTableCell>Employee Id</StyledTableCell>
+            {headers.map((header, i) => (
+              <StyledTableCell key={i}>{header}</StyledTableCell>
+            ))}
             <StyledTableCell align="right">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -99,6 +105,7 @@ export default function CustomizedTable({
               handleChangePage={handleChangePage}
               handleChangeRowsPerPage={handleChangeRowsPerPage}
               page={page}
+              totalPage={totalPage} // totalPage for real data, remove ids
               rowsPerPage={rowsPerPage}
               ids={ids}
             />
