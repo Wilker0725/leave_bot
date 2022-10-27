@@ -13,6 +13,7 @@ export default async function handler(
   req: ExtendedNextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("---- hit server ----- ")
   const prisma = new PrismaClient({ log: ["query"] })
 
   try {

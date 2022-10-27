@@ -12,9 +12,23 @@ let totalPages = 0,
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: (page = 0) => {
-        currentPage = page
-        return `/api/users?page=${page + 1}`
+      // query: (body: UserPayload) => ({
+      //   url: `/users`,
+      //   method: 'POST',
+      //   body: {...body}
+      // }),
+      // query: (page = 0) => { original
+      //   currentPage = page
+      //   return `users?page=${page + 1}`
+      // },
+      query: (body) => {
+        console.log("body: ", body)
+        // currentPage = page
+        return {
+          url: `/api/users`,
+          method: "GET",
+          body: { page: 1, limit: 10 },
+        }
       },
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError
