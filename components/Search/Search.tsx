@@ -3,14 +3,13 @@ import TextField from "@mui/material/TextField"
 import Grid from "@mui/material/Grid"
 import Autocomplete from "@mui/material/Autocomplete"
 import { Box, Button, Paper, Typography } from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
-import Collapse from "@mui/material/Collapse"
+import { GridSearchIcon } from "@mui/x-data-grid"
 
 type PropsSearch = {
-  onChangeText: (
+  onChangeText?: (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
-  autoCompleteOnChange: (
+  autoCompleteOnChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue: string
   ) => void
@@ -27,7 +26,9 @@ const Search = ({
       <Paper variant="outlined">
         <Grid container spacing={2} py={4} px={2}>
           <Grid item xs={12}>
-            <Typography fontWeight={600}>Search:</Typography>
+            <Typography variant="h6" fontWeight={600}>
+              Search:
+            </Typography>
           </Grid>
           <Grid item xs={6} md={4}>
             <Autocomplete
@@ -60,43 +61,13 @@ const Search = ({
               onChange={onChangeText}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
-            <Autocomplete
-              id="role"
-              options={ProjectData}
-              autoHighlight
-              getOptionLabel={(option: PropsProjectData) => option.project}
-              onChange={autoCompleteOnChange}
-              renderOption={(props, option) => (
-                <Box
-                  component="li"
-                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                >
-                  <Box mr="14px">
-                    {option.inCharge.role === "Admin" ? "👶" : "🕵🏻"}
-                  </Box>
-                  {option.inCharge.role}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="All Roles"
-                  inputProps={{
-                    ...params.inputProps,
-                  }}
-                />
-              )}
-            />
-          </Grid>
           <Grid item md={12} ml={"auto"}>
             <Box display={"flex"}>
               <Box ml="auto">
                 <Button
                   type="submit"
                   variant="contained"
-                  endIcon={<SearchIcon />}
+                  endIcon={<GridSearchIcon />}
                 >
                   Search
                 </Button>

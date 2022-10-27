@@ -1,10 +1,13 @@
 import Search from "@/components/Search/Search"
 import UsersList from "@/features/users/UsersList"
-import AddBoxIcon from "@mui/icons-material/AddBox"
-import { Button, Typography } from "@mui/material"
+import { Button, Collapse, IconButton, Stack, Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import Link from "next/link"
+import Drawer from "@mui/material/Drawer"
+import Divider from "@mui/material/Divider"
+
 import { FormEvent, useState } from "react"
+import Container from "@mui/material/Container"
+import { GridSearchIcon } from "@mui/x-data-grid"
 
 type typeFormData = {
   projectName?: string
@@ -13,8 +16,9 @@ type typeFormData = {
   role?: string
 }
 
-const Leave = () => {
+const User = () => {
   const [formData, setFormData] = useState<typeFormData | object>({})
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
 
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,29 +38,46 @@ const Leave = () => {
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    // call search api
+    // call search api with query
     console.log("event: ", event)
   }
 
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return
+      }
+
+      setIsSearchOpen(open)
+    }
+
   return (
-    <Box display={"flex"} flexDirection="column">
-      <Search
-        // open={open}
-        onChangeText={handleSearchInput}
-        autoCompleteOnChange={handleAutoCompleteInput}
-        onSubmit={handleOnSubmit}
-      />
-      {/* <Box ml={"auto"} mb={2}>
-        <Link href="/users/new">
-          <Button variant="outlined">
-            <Typography mr="6px">Create new Leave</Typography>
-            <AddBoxIcon fontSize="medium" />
-          </Button>
-        </Link>
-      </Box> */}
-      <UsersList />
-    </Box>
+    <Container>
+      <Stack direction={"column"}>
+        <Box ml={"auto"} my={2}>
+          <IconButton color={"info"} onClick={toggleDrawer(true)}>
+            <GridSearchIcon />
+          </IconButton>
+        </Box>
+        <Drawer
+          anchor={"top"}
+          open={isSearchOpen}
+          onClose={toggleDrawer(false)}
+        >
+          <Search
+            onChangeText={handleSearchInput}
+            autoCompleteOnChange={handleAutoCompleteInput}
+            onSubmit={handleOnSubmit}
+          />
+        </Drawer>
+        <UsersList />
+      </Stack>
+    </Container>
   )
 }
 
-export default Leave
+export default User
