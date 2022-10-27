@@ -21,7 +21,7 @@ import { TypeUser } from "@/features/users/types"
 const EditUserForm: FC<{ id: string }> = ({ id }) => {
   const router = useRouter()
 
-  const user = useSelector((state) => selectUserById(state, id))
+  const user: TypeUser = useSelector((state) => selectUserById(state, id))
 
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation()
@@ -31,7 +31,7 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
   ] = useDeleteUserMutation()
 
-  const [editUser, setEditUser] = useState<TypeUser | object>({})
+  const [editUser, setEditUser] = useState<TypeUser | any>({})
 
   useEffect(() => {
     setEditUser(user)
@@ -63,22 +63,14 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
     } catch (error) {}
   }
 
-  const handleOnChangeStartDate = (value: Dayjs) => {
-    setEditUser({ ...editUser, startDate: value })
-  }
-
-  const handleOnChangeEndDate = (value: Dayjs) => {
-    setEditUser({ ...editUser, endDate: value })
-  }
-
   if (!user) return <p>Loading</p>
 
   return (
-    <Grid container rowSpacing={2}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
-            {user.userName}
+            {user.name}
           </Typography>
           <Box display={"flex"}>
             <SaveIcon
@@ -103,8 +95,7 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
             name="userName"
             label="User Name"
             placeholder="User Name"
-            value={editUser?.userName || ""}
-            className=""
+            value={editUser?.name || ""}
             onChange={handleOnChangeText}
           />
         </FormGroup>
@@ -113,12 +104,11 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="empName"
-            name="empName"
-            label="Employees"
-            placeholder="Employees"
-            value={editUser?.empName || ""}
-            className=""
+            id="title"
+            name="title"
+            label="Title"
+            placeholder="Title"
+            value={editUser?.title || ""}
             onChange={handleOnChangeText}
           />
         </FormGroup>
@@ -127,12 +117,11 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="purchaseOrderNumber"
-            name="purchaseOrderNumber"
-            label="Purchase Order Number"
-            placeholder="Purchase Order Number"
-            value={editUser?.purchaseOrderNumber || ""}
-            className=""
+            id="team_name"
+            name="team_name"
+            label="Team Name"
+            placeholder="Team Name"
+            value={editUser?.team_name || ""}
             onChange={handleOnChangeText}
           />
         </FormGroup>
@@ -141,31 +130,25 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="salesOrderNumber"
-            name="salesOrderNumber"
-            label="Sales Order Number"
-            placeholder="Sales Order Number"
-            value={editUser?.salesOrderNumber || ""}
-            className=""
+            id="role"
+            name="role"
+            label="Role"
+            placeholder="Role"
+            value={editUser?.role || ""}
             onChange={handleOnChangeText}
           />
         </FormGroup>
       </Grid>
       <Grid item xs={12} md={6}>
         <FormGroup>
-          <DatePicker
-            value={editUser?.startDate || null}
-            label={"Start Date"}
-            onChange={handleOnChangeStartDate}
-          />
-        </FormGroup>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormGroup>
-          <DatePicker
-            value={editUser?.endDate || null}
-            label={"End Date"}
-            onChange={handleOnChangeEndDate}
+          <TextField
+            required={true}
+            id="is_active"
+            name="is_active"
+            label="Active"
+            placeholder="Active"
+            value={editUser?.is_active || ""}
+            onChange={handleOnChangeText}
           />
         </FormGroup>
       </Grid>

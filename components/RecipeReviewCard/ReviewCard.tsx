@@ -17,7 +17,7 @@ const RecipeReviewCard = React.forwardRef<any, PropsRecipeReviewCard>(
     return (
       <Box>
         <a ref={ref} href={href}>
-          <Card sx={{ width: "100%" }} md={{ maxWidth: 345 }}>
+          <Card sx={{ width: "100%" }}>
             <Box ml={2}>{children}</Box>
             <CardContent>
               <Typography variant="body2" color="text.secondary">

@@ -17,7 +17,7 @@ const NewProjectForm = () => {
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
     useAddNewProjectMutation(undefined)
 
-  const [newProject, setNewProject] = useState<DataNewProject | object>({})
+  const [newProject, setNewProject] = useState<DataNewProject | any>({})
 
   const [startDate, setStartDate] = useState<Dayjs | null>()
   const [endDate, setEndDate] = useState<Dayjs | null>()

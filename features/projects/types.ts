@@ -8,5 +8,6 @@ export type DataNewProject = {
   startDate: Dayjs | null
   endDate: Dayjs | null
   _id?: string
+  id?: string
   _v: number
 }

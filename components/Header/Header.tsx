@@ -12,19 +12,21 @@ const Header = () => {
   return (
     <Box sx={{ mb: 2 }} mb={4}>
       <AppBar position="static">
-        <Toolbar className="cursor">
-          <Link href="/">
-            <Typography
-              sx={{ display: "flex", flexGrow: 1, alignItems: "center" }}
-              variant="h6"
-              component="div"
-            >
-              <AssuredWorkloadIcon />
-              <Box ml={1}>Dashboard</Box>
-            </Typography>
-          </Link>
-          <Button color="inherit">Login</Button>
-          <LogoutIcon />
+        <Toolbar>
+          <Box className="cursor">
+            <Link href="/">
+              <Typography
+                sx={{ display: "flex", flexGrow: 1, alignItems: "center" }}
+                variant="h6"
+                component="div"
+              >
+                <AssuredWorkloadIcon />
+                <Box ml={1}>Dashboard</Box>
+              </Typography>
+            </Link>
+          </Box>
+          {/* <Button color="inherit">Login</Button>
+          <LogoutIcon /> */}
         </Toolbar>
       </AppBar>
     </Box>

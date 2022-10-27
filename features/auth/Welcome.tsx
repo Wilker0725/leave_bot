@@ -3,11 +3,6 @@ import Link from "next/link"
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt"
 import RecipeReviewCard from "@/components/RecipeReviewCard"
 
-const LinkStyles = {
-  display: "flex",
-  alignItems: "center",
-}
-
 const Welcome = () => {
   const date = new Date()
   const today = new Intl.DateTimeFormat("en-GB", {

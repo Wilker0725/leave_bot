@@ -21,7 +21,9 @@ import { DataNewProject } from "@/features/projects/types"
 const EditProjectForm: FC<{ id: string }> = ({ id }) => {
   const router = useRouter()
 
-  const project = useSelector((state) => selectProjectById(state, id))
+  const project: DataNewProject = useSelector((state) =>
+    selectProjectById(state, id)
+  )
 
   const [updateProject, { isLoading, isSuccess, isError, error }] =
     useUpdateProjectMutation()
@@ -31,7 +33,16 @@ const EditProjectForm: FC<{ id: string }> = ({ id }) => {
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
   ] = useDeleteProjectMutation()
 
-  const [editProject, setEditProject] = useState<DataNewProject | object>({})
+  const [editProject, setEditProject] = useState<DataNewProject>({
+    projectName: "",
+    empName: "",
+    purchaseOrderNumber: "",
+    salesOrderNumber: "",
+    startDate: null,
+    endDate: null,
+    _id: "",
+    _v: 0,
+  })
 
   useEffect(() => {
     setEditProject(project)
@@ -103,7 +114,7 @@ const EditProjectForm: FC<{ id: string }> = ({ id }) => {
             name="projectName"
             label="Project Name"
             placeholder="Project Name"
-            value={editProject?.projectName || ""}
+            value={editProject.projectName || ""}
             className=""
             onChange={handleOnChangeText}
           />
