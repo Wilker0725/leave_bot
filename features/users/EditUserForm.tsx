@@ -1,13 +1,13 @@
 import {
   getUserSelectors,
   useDeleteUserMutation,
+  usersApiSlice,
   useUpdateUserMutation,
 } from "@/features/users/usersApiSlice"
 import { FC, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import FormGroup from "@mui/material/FormGroup"
-import { Dayjs } from "dayjs"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
@@ -18,11 +18,19 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation"
 import { TypeUser } from "@/features/users/types"
 import { selectUserQuery } from "./userSlice"
+import { useAppDispatch } from "@/app/store"
 
 const EditUserForm = ({ id }) => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const query = useSelector(selectUserQuery)
   const { selectById } = getUserSelectors(query)
+
+  useEffect(() => {
+    const result = dispatch(usersApiSlice.endpoints.getUsers.initiate(query))
+
+    return result.unsubscribe
+  }, [dispatch, query])
 
   const user = useSelector(selectById(id))
 
