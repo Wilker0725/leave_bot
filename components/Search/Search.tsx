@@ -31,19 +31,18 @@ const Search = ({
             </Typography>
           </Grid>
           <Grid item xs={6} md={4}>
-            <Autocomplete
-              id="userName"
-              freeSolo
-              options={[]}
-              onChange={autoCompleteOnChange}
-              renderInput={(params) => (
-                <TextField {...params} label="User Name" />
-              )}
+            <TextField
+              id="cognizant_username"
+              fullWidth
+              name="User Name"
+              label="User Name"
+              variant="outlined"
+              onChange={onChangeText}
             />
           </Grid>
           <Grid item xs={6} md={4}>
             <TextField
-              id="userId"
+              id="cognizant_user_id"
               fullWidth
               name="User Id"
               label="User Id"
@@ -54,9 +53,9 @@ const Search = ({
           <Grid item xs={6} md={4}>
             <TextField
               fullWidth
-              id="project"
-              name="Project Name"
-              label="Project Name"
+              id="team_name"
+              name="Team Name"
+              label="Team Name"
               variant="outlined"
               onChange={onChangeText}
             />

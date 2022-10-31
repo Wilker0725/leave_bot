@@ -32,7 +32,8 @@
     "app/api/apiSlice.ts",
     "pages/projects/[id].js",
     "features/projects/projectsApiSlice.js",
-    "features/users/usersApiSlice.js"
+    "features/users/usersApiSlice.js",
+    "pages/api/users/index.js"
   ],
   "exclude": ["node_modules"]
 }

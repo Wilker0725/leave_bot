@@ -19,7 +19,6 @@ interface TablePaginationActionsProps {
 }
 
 type PropsPagination = {
-  ids: string[]
   page: number
   totalPage: number
   rowsPerPage: number
@@ -33,7 +32,6 @@ type PropsPagination = {
 }
 
 const Pagination = ({
-  ids,
   page,
   totalPage,
   rowsPerPage,
@@ -44,7 +42,7 @@ const Pagination = ({
     <TablePagination
       rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
       colSpan={5}
-      count={ids.length || 0} // totalPage for real data
+      count={totalPage}
       rowsPerPage={rowsPerPage}
       page={page}
       SelectProps={{

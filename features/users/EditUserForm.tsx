@@ -1,5 +1,5 @@
 import {
-  selectUserById,
+  getUserSelectors,
   useDeleteUserMutation,
   useUpdateUserMutation,
 } from "@/features/users/usersApiSlice"
@@ -17,11 +17,14 @@ import SaveIcon from "@mui/icons-material/Save"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation"
 import { TypeUser } from "@/features/users/types"
+import { selectUserQuery } from "./userSlice"
 
-const EditUserForm: FC<{ id: string }> = ({ id }) => {
+const EditUserForm = ({ id }) => {
   const router = useRouter()
+  const query = useSelector(selectUserQuery)
+  const { selectById } = getUserSelectors(query)
 
-  const user: TypeUser = useSelector((state) => selectUserById(state, id))
+  const user = useSelector(selectById(id))
 
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation()
@@ -66,7 +69,7 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
   if (!user) return <p>Loading</p>
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} mt={4}>
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
@@ -147,7 +150,7 @@ const EditUserForm: FC<{ id: string }> = ({ id }) => {
             name="is_active"
             label="Active"
             placeholder="Active"
-            value={editUser?.is_active || ""}
+            value={editUser?.is_active ? "Active" : "Inactive"}
             onChange={handleOnChangeText}
           />
         </FormGroup>

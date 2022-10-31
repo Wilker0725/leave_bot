@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import EditUserForm from "@/features/users/EditUserForm"
-import { Box } from "@mui/material"
+import { Container } from "@mui/material"
 
 const User = () => {
   const router = useRouter()
@@ -9,9 +9,9 @@ const User = () => {
   if (!id) return <p>loading..</p>
 
   return (
-    <Box>
+    <Container>
       <EditUserForm id={id} />
-    </Box>
+    </Container>
   )
 }
 

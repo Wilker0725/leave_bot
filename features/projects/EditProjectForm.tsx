@@ -114,7 +114,7 @@ const EditProjectForm: FC<{ id: string }> = ({ id }) => {
             name="projectName"
             label="Project Name"
             placeholder="Project Name"
-            value={editProject.projectName || ""}
+            value={editProject?.projectName || ""}
             className=""
             onChange={handleOnChangeText}
           />

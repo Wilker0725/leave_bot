@@ -1,39 +1,31 @@
-import type { NextApiRequest, NextApiResponse } from "next"
 import { PrismaClient } from "@prisma/client"
 
-interface ExtendedNextApiRequest extends NextApiRequest {
-  query: {
-    team_name?: string
-    cognizant_username?: string
-    cognizant_user_id?: string
-  }
-}
-
-export default async function handler(
-  req: ExtendedNextApiRequest,
-  res: NextApiResponse
-) {
-  console.log("---- hit server ----- ")
-  const prisma = new PrismaClient({ log: ["query"] })
+export default async function handler(req, res) {
+  const prisma = new PrismaClient({ log: [] })
 
   try {
-    const { body, query } = req
-    const { page = 1, limit = 10 } = body
-    const { team_name, cognizant_username, cognizant_user_id } = query
+    let { team_name, cognizant_username, cognizant_user_id, page, limit } =
+      req.query
+
+    let wheres = Object.keys(req.query).reduce((acc, cur) => {
+      if (["limit", "page"].includes(cur)) return acc
+
+      if (req.query[cur] !== undefined) {
+        return {
+          [cur]: {
+            contains: req.query[cur].replace(/["']/g, ""),
+          },
+        }
+      }
+
+      return acc
+    }, {})
 
     const users = await prisma.users.findMany({
       skip: (page - 1) * limit,
       take: limit * 1,
       where: {
-        team_name: {
-          contains: team_name?.replace(/["']/g, ""),
-        },
-        cognizant_username: {
-          contains: cognizant_username?.replace(/["']/g, ""),
-        },
-        cognizant_user_id: {
-          contains: cognizant_user_id?.replace(/["']/g, ""),
-        },
+        ...wheres,
       },
       include: {
         _count: true,
@@ -59,7 +51,7 @@ export default async function handler(
     res.status(200).json({
       users: users,
       totalPages: Math.ceil(recordCount / limit),
-      currentPage: page,
+      currentPage: +page,
       recordCount: recordCount,
     })
   } catch (error) {

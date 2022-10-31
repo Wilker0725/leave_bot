@@ -8,6 +8,10 @@ import Divider from "@mui/material/Divider"
 import { FormEvent, useState } from "react"
 import Container from "@mui/material/Container"
 import { GridSearchIcon } from "@mui/x-data-grid"
+import { useAppDispatch } from "@/app/store"
+import { setUserPageQuery } from "@/features/users/userSlice"
+import { objectToQuery } from "@/utils/queryTransform"
+import RestartAltIcon from "@mui/icons-material/RestartAlt"
 
 type typeFormData = {
   projectName?: string
@@ -17,29 +21,26 @@ type typeFormData = {
 }
 
 const User = () => {
+  const dispatch = useAppDispatch()
+
   const [formData, setFormData] = useState<typeFormData | object>({})
+  const [isSearch, setIsSearch] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
 
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const name = event.target.id.split("-")[0]
+    const name = event.target.id
     setFormData({ ...formData, [name]: event.target.value })
-  }
-
-  const handleAutoCompleteInput = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue: string
-  ) => {
-    const name = event.target.id.split("-")[0]
-    setFormData({ ...formData, [name]: newValue })
   }
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const query = objectToQuery(formData)
 
-    // call search api with query
-    console.log("event: ", event)
+    dispatch(setUserPageQuery(`page=1&limit=10&${query}`))
+    setIsSearch(true)
+    setIsSearchOpen(false)
   }
 
   const toggleDrawer =
@@ -58,21 +59,29 @@ const User = () => {
   return (
     <Container>
       <Stack direction={"column"}>
-        <Box ml={"auto"} my={2}>
+        <Stack direction={"row"} ml={"auto"} my={2}>
           <IconButton color={"info"} onClick={toggleDrawer(true)}>
             <GridSearchIcon />
           </IconButton>
-        </Box>
+          {isSearch ? (
+            <IconButton
+              color={"info"}
+              style={{ paddingLeft: 0 }}
+              onClick={() => {
+                dispatch(setUserPageQuery(`page=1&limit=10`))
+                setIsSearch(false)
+              }}
+            >
+              <RestartAltIcon />
+            </IconButton>
+          ) : null}
+        </Stack>
         <Drawer
           anchor={"top"}
           open={isSearchOpen}
           onClose={toggleDrawer(false)}
         >
-          <Search
-            onChangeText={handleSearchInput}
-            autoCompleteOnChange={handleAutoCompleteInput}
-            onSubmit={handleOnSubmit}
-          />
+          <Search onChangeText={handleSearchInput} onSubmit={handleOnSubmit} />
         </Drawer>
         <UsersList />
       </Stack>

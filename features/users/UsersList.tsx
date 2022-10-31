@@ -1,12 +1,30 @@
+import { useAppDispatch } from "@/app/store"
 import CustomizedTables from "@/components/Tables/CustomizedTable"
 import User from "@/features/users/User"
 import { useGetUsersQuery } from "@/features/users/usersApiSlice"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { selectUserQuery, setUserPageQuery } from "@/features/users/userSlice"
+import { useSelector } from "react-redux"
 
 const UsersList = () => {
-  const [page, setPage] = useState(0)
+  const dispatch = useAppDispatch()
+  const pageSearchQuery = useSelector(selectUserQuery)
 
-  const { data: users, isLoading, isSuccess, isError } = useGetUsersQuery(page)
+  const [page, setPage] = useState(0)
+  const [limit, setLimit] = useState(10)
+
+  const {
+    data: users,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetUsersQuery(pageSearchQuery)
+
+  useEffect(() => {
+    const queryString = `page=${page + 1}&limit=${limit}`
+
+    dispatch(setUserPageQuery(queryString))
+  }, [page, limit, dispatch])
 
   let content = null
 
@@ -14,21 +32,21 @@ const UsersList = () => {
   if (isError) content = <p>Error</p>
 
   if (isSuccess) {
-    const { ids } = users
-    const tableContent = ids?.length
-      ? ids.map((id: string) => <User key={id} id={id} />)
-      : null
+    const { ids, entities } = users
 
     content = (
       <CustomizedTables
         minWidth={600}
         headers={["Name", "Role", "Active", "Project Team Id"]}
-        ids={ids}
-        page={page}
-        totalPage={1} // for real data
         setPage={setPage}
+        page={page}
+        rowsPerPage={limit}
+        setRowsPerPage={setLimit}
+        totalPage={267}
       >
-        {tableContent}
+        {ids?.length
+          ? ids.map((id) => <User key={entities[id].id} user={entities[id]} />)
+          : null}
       </CustomizedTables>
     )
 

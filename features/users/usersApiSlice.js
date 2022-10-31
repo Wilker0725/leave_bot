@@ -1,46 +1,28 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
 import { apiSlice } from "@/app/api/apiSlice"
+import { queryToObject } from "@/utils/queryTransform"
 
-const usersAdapter = createEntityAdapter({})
+export const usersAdapter = createEntityAdapter({})
 
-const initialState = usersAdapter.getInitialState()
-
-let totalPages = 0,
-  currentPage = 0,
-  recordCount = 0
+export const initialState = usersAdapter.getInitialState()
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      // query: (body: UserPayload) => ({
-      //   url: `/users`,
-      //   method: 'POST',
-      //   body: {...body}
-      // }),
-      // query: (page = 0) => { original
-      //   currentPage = page
-      //   return `users?page=${page + 1}`
-      // },
-      query: (body) => {
-        console.log("body: ", body)
-        // currentPage = page
+      query: (args) => {
+        let params = queryToObject(args)
+
         return {
           url: `/api/users`,
           method: "GET",
-          body: { page: 1, limit: 10 },
+          params,
         }
       },
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError
       },
       transformResponse: (responseData) => {
-        recordCount = responseData.recordCount
-        totalPages = responseData.totalPages
-
-        const loadedUsers = responseData?.users.map((user) => {
-          user.id = user.id
-          return user
-        })
+        const loadedUsers = responseData?.users.map((user) => user)
 
         return usersAdapter.setAll(initialState, loadedUsers)
       },
@@ -84,10 +66,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
     }),
   }),
-  // overrideExisting: true,
+  overrideExisting: true,
 })
-
-export { currentPage, recordCount, totalPages }
 
 export const {
   useGetUsersQuery,
@@ -96,16 +76,23 @@ export const {
   useDeleteUserMutation,
 } = usersApiSlice
 
-export const selectUsersResult =
-  usersApiSlice.endpoints.getUsers.select(currentPage)
+export const getUserSelectors = (query) => {
+  const selectUsersResult = usersApiSlice.endpoints.getUsers.select(query)
 
-// creates memoized selector
-const selectUsersData = createSelector(selectUsersResult, (usersResult) => {
-  return usersResult.data
-})
+  const adapterSelectors = createSelector(selectUsersResult, (result) =>
+    usersAdapter.getSelectors(() => result?.data ?? initialState)
+  )
 
-export const {
-  selectAll: selectAllUsers,
-  selectById: selectUserById,
-  selectIds: selectUserIds,
-} = usersAdapter.getSelectors((state) => selectUsersData(state) ?? initialState)
+  return {
+    selectAll: createSelector(adapterSelectors, (s) => s.selectAll(undefined)),
+    selectEntities: createSelector(adapterSelectors, (s) =>
+      s.selectEntities(undefined)
+    ),
+    selectIds: createSelector(adapterSelectors, (s) => s.selectIds(undefined)),
+    selectTotal: createSelector(adapterSelectors, (s) =>
+      s.selectTotal(undefined)
+    ),
+    selectById: (id) =>
+      createSelector(adapterSelectors, (s) => s.selectById(s, id)),
+  }
+}

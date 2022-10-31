@@ -1,7 +1,8 @@
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Container, Grid, Typography } from "@mui/material"
 import Link from "next/link"
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt"
 import RecipeReviewCard from "@/components/RecipeReviewCard"
+import GroupIcon from "@mui/icons-material/Group"
+import VaccinesIcon from "@mui/icons-material/Vaccines"
 
 const Welcome = () => {
   const date = new Date()
@@ -10,26 +11,26 @@ const Welcome = () => {
   }).format(date)
 
   return (
-    <Box>
+    <Container>
       <Box component={"h3"}>Welcome!</Box>
       <Typography>{today}</Typography>
       <Grid container mt={4} spacing={2}>
         <Grid item xs={12} md={4}>
           <Link href="/users" passHref>
             <RecipeReviewCard message={"View Users"}>
-              <ArrowRightAltIcon />
+              <GroupIcon fontSize="large" />
             </RecipeReviewCard>
           </Link>
         </Grid>
         <Grid item xs={12} md={4}>
           <Link href="/projects" passHref>
             <RecipeReviewCard message={"View Projects"}>
-              <ArrowRightAltIcon />
+              <VaccinesIcon fontSize="large" />
             </RecipeReviewCard>
           </Link>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   )
 }
 

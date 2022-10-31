@@ -31,10 +31,11 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 type PropsCustomizedTable = {
-  children: JSX.Element | React.ReactNode | any
+  children: React.ReactNode | any
   setPage: (value: number) => void
   page: number
-  ids: string[]
+  setRowsPerPage: (value: number) => void
+  rowsPerPage: number
   headers: string[]
   minWidth?: number
   totalPage: number
@@ -44,20 +45,14 @@ export default function CustomizedTable({
   children,
   setPage,
   page,
-  ids,
+  setRowsPerPage,
+  rowsPerPage,
   headers,
   minWidth,
   totalPage,
 }: PropsCustomizedTable) {
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
-
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ids.length) : 0
-
-  // totalPage for real data
-  // const emptyRows =
-  //   page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalPage) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalPage) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -85,12 +80,7 @@ export default function CustomizedTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {rowsPerPage > 0
-            ? children.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : children}
+          {children}
           {emptyRows > 0 && (
             <>
               <TableRow style={{ height: 53 * emptyRows }}>
@@ -105,9 +95,8 @@ export default function CustomizedTable({
               handleChangePage={handleChangePage}
               handleChangeRowsPerPage={handleChangeRowsPerPage}
               page={page}
-              totalPage={totalPage} // totalPage for real data, remove ids
+              totalPage={totalPage}
               rowsPerPage={rowsPerPage}
-              ids={ids}
             />
           </TableRow>
         </TableFooter>
