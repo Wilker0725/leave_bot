@@ -17,8 +17,9 @@ import SaveIcon from "@mui/icons-material/Save"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation"
 import { TypeUser } from "@/features/users/types"
-import { selectUserQuery } from "./userSlice"
+import { selectUserQuery, setUserPageQuery } from "./userSlice"
 import { useAppDispatch } from "@/app/store"
+import MenuItem from "@mui/material/MenuItem"
 
 const EditUserForm = ({ id }) => {
   const router = useRouter()
@@ -28,6 +29,7 @@ const EditUserForm = ({ id }) => {
 
   useEffect(() => {
     const result = dispatch(usersApiSlice.endpoints.getUsers.initiate(query))
+    dispatch(setUserPageQuery(query))
 
     return result.unsubscribe
   }, [dispatch, query])
@@ -154,13 +156,20 @@ const EditUserForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
+            select
             id="is_active"
             name="is_active"
             label="Active"
             placeholder="Active"
             value={editUser?.is_active ? "Active" : "Inactive"}
             onChange={handleOnChangeText}
-          />
+          >
+            {[{ value: "Active" }, { value: "Inactive" }].map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
         </FormGroup>
       </Grid>
     </Grid>

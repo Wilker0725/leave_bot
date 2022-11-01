@@ -1,7 +1,6 @@
 import * as React from "react"
 import TextField from "@mui/material/TextField"
 import Grid from "@mui/material/Grid"
-import Autocomplete from "@mui/material/Autocomplete"
 import { Box, Button, Paper, Typography } from "@mui/material"
 import { GridSearchIcon } from "@mui/x-data-grid"
 
@@ -79,18 +78,4 @@ const Search = ({
   )
 }
 
-type PropsProjectData = {
-  project: string
-  inCharge: {
-    id: number
-    name: string
-    role: string | []
-  }
-}
-
-const ProjectData: readonly PropsProjectData[] = [
-  { project: "BookingSG", inCharge: { id: 2, name: "John", role: "Manager" } },
-  { project: "FilterSG", inCharge: { id: 10, name: "Bob", role: "Admin" } },
-  { project: "HotelSG", inCharge: { id: 7, name: "Weyne", role: "Employee" } },
-]
 export default Search
