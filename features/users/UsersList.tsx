@@ -5,6 +5,7 @@ import { useGetUsersQuery } from "@/features/users/usersApiSlice"
 import { useEffect, useState } from "react"
 import { selectUserQuery, setUserPageQuery } from "@/features/users/userSlice"
 import { useSelector } from "react-redux"
+import { queryToObject } from "@/utils/queryTransform"
 
 const UsersList = () => {
   const dispatch = useAppDispatch()
@@ -37,7 +38,7 @@ const UsersList = () => {
     content = (
       <CustomizedTables
         minWidth={600}
-        headers={["Name", "Role", "Active", "Project Team Id"]}
+        headers={["Name", "Role", "Active", "Team Name"]}
         setPage={setPage}
         page={page}
         rowsPerPage={limit}

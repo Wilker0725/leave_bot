@@ -18,7 +18,8 @@ const BreadcrumbsNav = () => {
     const crumblist = asPathNestedRoutes.map((subpath, idx) => {
       const href = "/" + asPathNestedRoutes.slice(0, idx + 1).join("/")
       // The title will just be the route string for now
-      const title = subpath
+      const title = subpath.charAt(0).toUpperCase() + subpath.slice(1)
+
       return { href, text: title }
     })
 
@@ -46,9 +47,11 @@ function Crumb({ text, href, last = false }) {
   }
 
   return (
-    <Link underline="hover" color="inherit" href={href}>
-      {text}
-    </Link>
+    <NextLink href={href} passHref>
+      <Link underline="hover" color="inherit">
+        {text}
+      </Link>
+    </NextLink>
   )
 }
 

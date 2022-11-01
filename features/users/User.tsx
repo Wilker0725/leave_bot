@@ -16,7 +16,7 @@ const User: FC<{ user: any }> = ({ user }) => {
         <StyledTableCell>
           {user.is_active ? "Active" : "Inactive"}
         </StyledTableCell>
-        <StyledTableCell>{user.project_team_id}</StyledTableCell>
+        <StyledTableCell>{user.team_name}</StyledTableCell>
         <StyledTableCell align="right">
           <Box display={"flex"} justifyContent="flex-end">
             <Box className="cursor">
