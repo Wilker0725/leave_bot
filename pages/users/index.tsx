@@ -9,7 +9,12 @@ import { FormEvent, useState } from "react"
 import Container from "@mui/material/Container"
 import { GridSearchIcon } from "@mui/x-data-grid"
 import { useAppDispatch } from "@/app/store"
-import { setUserPageQuery } from "@/features/users/userSlice"
+import {
+  setUserPageQuery,
+  setUserSearch,
+  selectUserSearch,
+  resetQuery,
+} from "@/features/users/userSlice"
 import { objectToQuery } from "@/utils/queryTransform"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
 
@@ -24,23 +29,27 @@ const User = () => {
   const dispatch = useAppDispatch()
 
   const [formData, setFormData] = useState<typeFormData | object>({})
-  const [isSearch, setIsSearch] = useState(false)
+  const [isSearch, setIsSearch] = useState<boolean>(false)
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
 
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const name = event.target.id
-    setFormData({ ...formData, [name]: event.target.value })
+    setFormData({ ...formData, [name]: event.target.value.trim() })
   }
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const query = objectToQuery(formData)
+    const userQuery = objectToQuery(formData)
 
-    dispatch(setUserPageQuery(`page=1&limit=10&${query}`))
+    dispatch(setUserSearch(userQuery))
+    dispatch(setUserPageQuery(`page=1&limit=10&${userQuery}`))
     setIsSearch(true)
+
+    // reset state
     setIsSearchOpen(false)
+    setFormData({})
   }
 
   const toggleDrawer =
@@ -68,7 +77,7 @@ const User = () => {
               color={"info"}
               style={{ paddingLeft: 0 }}
               onClick={() => {
-                dispatch(setUserPageQuery(`page=1&limit=10`))
+                dispatch(resetQuery({}))
                 setIsSearch(false)
               }}
             >
