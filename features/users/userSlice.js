@@ -4,6 +4,13 @@ const userReducer = createSlice({
   name: "user",
   initialState: {
     query: `page=1&limit=10`,
+    // pageQuery: {
+    //   page: 1,
+    //   limit: 10,
+    //   team_name: "",
+    //   cognizant_user_id: "",
+    //   cognizant_username: "",
+    // },
   },
   reducers: {
     setUserPageQuery: (state, action) => {

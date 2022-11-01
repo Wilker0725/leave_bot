@@ -33,20 +33,31 @@ const UsersList = () => {
   if (isError) content = <p>Error</p>
 
   if (isSuccess) {
-    const { ids, entities } = users
+    let { ids, entities } = users
+
+    /**
+        Walk around from apiSlice to pass pageInfo 
+        Need to remove from here 
+        - to remove the last item
+     */
+    const pageInfo = entities["pageInfo"]
 
     content = (
       <CustomizedTables
         minWidth={600}
-        headers={["Name", "Role", "Active", "Team Name"]}
+        headers={["Name", "Cognizant Id", "Role", "Team Name"]}
         setPage={setPage}
         page={page}
         rowsPerPage={limit}
         setRowsPerPage={setLimit}
-        totalPage={267}
+        totalPage={pageInfo.recordCount}
       >
         {ids?.length
-          ? ids.map((id) => <User key={entities[id].id} user={entities[id]} />)
+          ? ids.map((id: string) => {
+              if (id === "pageInfo") return null
+
+              return <User key={entities[id].id} user={entities[id]} />
+            })
           : null}
       </CustomizedTables>
     )

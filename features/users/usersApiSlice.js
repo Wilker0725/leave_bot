@@ -2,7 +2,7 @@ import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
 import { apiSlice } from "@/app/api/apiSlice"
 import { queryToObject } from "@/utils/queryTransform"
 
-export const usersAdapter = createEntityAdapter({})
+export const usersAdapter = createEntityAdapter()
 
 export const initialState = usersAdapter.getInitialState()
 
@@ -22,7 +22,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         return response.status === 200 && !result.isError
       },
       transformResponse: (responseData) => {
+        const { currentPage, recordCount, totalPages } = responseData
+
         const loadedUsers = responseData?.users.map((user) => user)
+
+        // walk around to pass page details
+        loadedUsers.push({
+          id: "pageInfo",
+          currentPage,
+          recordCount,
+          totalPages,
+        })
 
         return usersAdapter.setAll(initialState, loadedUsers)
       },
