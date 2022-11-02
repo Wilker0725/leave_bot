@@ -12,8 +12,8 @@ import { useAppDispatch } from "@/app/store"
 import {
   setUserPageQuery,
   setUserSearch,
-  selectUserSearch,
   resetQuery,
+  setUserPage,
 } from "@/features/users/userSlice"
 import { objectToQuery } from "@/utils/queryTransform"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
@@ -44,7 +44,9 @@ const User = () => {
     const userQuery = objectToQuery(formData)
 
     dispatch(setUserSearch(userQuery))
+    dispatch(setUserPage(0))
     dispatch(setUserPageQuery(`page=1&limit=10&${userQuery}`))
+
     setIsSearch(true)
 
     // reset state

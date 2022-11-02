@@ -1,9 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const USER_QUERY = `page=1&limit=10`
+
+let initialState = {
+  query:
+    typeof window === "undefined"
+      ? USER_QUERY
+      : JSON.parse(window.sessionStorage.getItem("user-query")),
+}
+
+if (initialState.query === null) {
+  initialState.query = USER_QUERY
+}
+
 const userReducer = createSlice({
   name: "user",
   initialState: {
-    query: `page=1&limit=10`,
+    ...initialState,
     page: 0,
     limit: 10,
     search: "",

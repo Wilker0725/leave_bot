@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/app/store"
 import CustomizedTables from "@/components/Tables/CustomizedTable"
 import User from "@/features/users/User"
 import { useGetUsersQuery } from "@/features/users/usersApiSlice"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {
   selectUserQuery,
   setUserPageQuery,
@@ -13,6 +13,7 @@ import {
   setUserPageLimit,
 } from "@/features/users/userSlice"
 import { useSelector } from "react-redux"
+import useSessionStorage from "@/hooks/useSessionStorage"
 
 const UsersList = () => {
   const dispatch = useAppDispatch()
@@ -20,6 +21,11 @@ const UsersList = () => {
   const pageSearch = useSelector(selectUserSearch)
   const page = useSelector(selectUserPage)
   const limit = useSelector(selectUserLimit)
+
+  const [_, setSessionStorageUserQuery] = useSessionStorage(
+    "user-query",
+    pageSearchQuery
+  )
 
   const {
     data: users,
@@ -32,7 +38,9 @@ const UsersList = () => {
     const queryString = `page=${page + 1}&limit=${limit}&${pageSearch}`
 
     dispatch(setUserPageQuery(queryString))
-  }, [page, limit, dispatch, pageSearch])
+
+    setSessionStorageUserQuery(queryString)
+  }, [page, limit, dispatch, pageSearch, setSessionStorageUserQuery])
 
   let content = null
 
