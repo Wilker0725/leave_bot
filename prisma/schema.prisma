@@ -34,7 +34,6 @@ model leave_types {
 model leaves {
   id            Int          @id @default(autoincrement())
   user_id       Int?
-  user          users?       @relation(fields: [user_id], references: [id])
   leave_type    String?      @db.VarChar
   start_date    DateTime?    @db.Timestamp(6)
   end_date      DateTime?    @db.Timestamp(6)
@@ -46,6 +45,9 @@ model leaves {
   updated_at    DateTime     @db.Timestamp(6)
   leave_type_id Int?
   leave_types   leave_types? @relation(fields: [leave_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_1258ed7339")
+  user          users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id], map: "fk_rails")
 }
 
 model project_teams {

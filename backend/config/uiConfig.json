@@ -1,0 +1,8 @@
+{
+  "users": {
+    "search_field": ["team_name", "cognizant_username", "cognizant_user_id"]
+  },
+  "leaves": {
+    "search_field": ["team_name", "start_date", "end_date"]
+  }
+}
