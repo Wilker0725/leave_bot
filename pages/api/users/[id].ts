@@ -58,7 +58,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         }
 
         const user = await prisma.users.update({
-          ...queryFilter,
+          where: {
+            id: parseInt(id as string, 10),
+          },
           data: {
             ...body,
             updated_at: formattedDate,
@@ -90,7 +92,9 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         }
 
         await prisma.users.update({
-          ...queryFilter,
+          where: {
+            id: parseInt(id as string, 10),
+          },
           data: {
             is_active: false,
             updated_at: formattedDate,

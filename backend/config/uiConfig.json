@@ -1,8 +1,10 @@
 {
   "users": {
-    "search_field": ["team_name", "cognizant_username", "cognizant_user_id"]
+    "search_field": ["team_name", "cognizant_username", "cognizant_user_id"],
+    "sort_field": ["team_name", "created_at", "cognizant_username"]
   },
   "leaves": {
-    "search_field": ["team_name", "start_date", "end_date"]
+    "search_field": ["team_name", "start_date", "end_date"],
+    "sort_field": ["team_name", "created_at"]
   }
 }
