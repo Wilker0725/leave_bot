@@ -1,14 +1,14 @@
-import { Box, Container, Grid, Typography } from "@mui/material"
-import Link from "next/link"
-import RecipeReviewCard from "@/components/RecipeReviewCard"
-import GroupIcon from "@mui/icons-material/Group"
-import VaccinesIcon from "@mui/icons-material/Vaccines"
+import { Box, Container, Grid, Typography } from "@mui/material";
+import Link from "next/link";
+import RecipeReviewCard from "@/components/RecipeReviewCard";
+import GroupIcon from "@mui/icons-material/Group";
+import VaccinesIcon from "@mui/icons-material/Vaccines";
 
 const Welcome = () => {
-  const date = new Date()
+  const date = new Date();
   const today = new Intl.DateTimeFormat("en-GB", {
     dateStyle: "full",
-  }).format(date)
+  }).format(date);
 
   return (
     <Container>
@@ -22,16 +22,9 @@ const Welcome = () => {
             </RecipeReviewCard>
           </Link>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Link href="/projects" passHref>
-            <RecipeReviewCard message={"View Projects"}>
-              <VaccinesIcon fontSize="large" />
-            </RecipeReviewCard>
-          </Link>
-        </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default Welcome
+export default Welcome;
