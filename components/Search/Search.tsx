@@ -1,27 +1,22 @@
-import * as React from "react"
-import TextField from "@mui/material/TextField"
-import Grid from "@mui/material/Grid"
-import { Box, Button, Paper, Typography } from "@mui/material"
-import { GridSearchIcon } from "@mui/x-data-grid"
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import { Box, Paper, Typography } from "@mui/material";
 
 type PropsSearch = {
   onChangeText?: (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void
+  ) => void;
   autoCompleteOnChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue: string
-  ) => void
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-}
+  ) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  children: React.ReactNode;
+};
 
-const Search = ({
-  onChangeText,
-  autoCompleteOnChange,
-  onSubmit,
-}: PropsSearch) => {
+const Search = ({ onSubmit, children }: PropsSearch) => {
   return (
-    <Box mb={2} component="form" onSubmit={onSubmit}>
+    <Box component="form" onSubmit={onSubmit}>
       <Paper variant="outlined">
         <Grid container spacing={2} py={4} px={2}>
           <Grid item xs={12}>
@@ -29,53 +24,11 @@ const Search = ({
               Search:
             </Typography>
           </Grid>
-          <Grid item xs={6} md={4}>
-            <TextField
-              id="cognizant_username"
-              fullWidth
-              name="User Name"
-              label="User Name"
-              variant="outlined"
-              onChange={onChangeText}
-            />
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <TextField
-              id="cognizant_user_id"
-              fullWidth
-              name="User Id"
-              label="User Id"
-              variant="outlined"
-              onChange={onChangeText}
-            />
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <TextField
-              fullWidth
-              id="team_name"
-              name="Team Name"
-              label="Team Name"
-              variant="outlined"
-              onChange={onChangeText}
-            />
-          </Grid>
-          <Grid item md={12} ml={"auto"}>
-            <Box display={"flex"}>
-              <Box ml="auto">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  endIcon={<GridSearchIcon />}
-                >
-                  Search
-                </Button>
-              </Box>
-            </Box>
-          </Grid>
+          {children}
         </Grid>
       </Paper>
     </Box>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

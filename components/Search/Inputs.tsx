@@ -1,47 +1,53 @@
-import FormGroup from "@mui/material/FormGroup"
-import TextField from "@mui/material/TextField"
-import Autocomplete from "@mui/material/Autocomplete"
-import MenuItem from "@mui/material/MenuItem"
+import FormGroup from "@mui/material/FormGroup";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import MenuItem from "@mui/material/MenuItem";
+import { Grid } from "@mui/material";
 
-type TypeInputVaraint = "outlined" | "filled" | "standard"
+type TypeInputVaraint = "outlined" | "filled" | "standard";
 
-type TypeInputBase = {
-  id: string
-  label: string
-  variant: TypeInputVaraint
-}
+export type TypeInputBase = {
+  name: string;
+  label: string;
+  variant?: TypeInputVaraint;
+  sizes: { xs: number; md: number };
+};
 
 interface TypeTextInput extends TypeInputBase {
+  type: "text";
   onChangeText: (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void
-}
-
-interface TypeSelectInput extends Omit<TypeInputBase, "variant"> {
-  required: boolean
+  ) => void;
 }
 
 export const TextInput = ({
   onChangeText,
-  id,
+  name,
   label,
-  variant,
+  variant = "outlined",
+  sizes,
 }: TypeTextInput) => {
   return (
-    <TextField
-      id="cognizant_username"
-      fullWidth
-      label="User Name"
-      variant="outlined"
-      onChange={onChangeText}
-    />
-  )
-}
+    <Grid item xs={sizes.xs} md={sizes.md}>
+      <FormGroup>
+        <TextField
+          id={name}
+          name={name}
+          fullWidth
+          label={label}
+          placeholder={label}
+          variant={variant}
+          onChange={onChangeText}
+        />
+      </FormGroup>
+    </Grid>
+  );
+};
 
-export const SelectInput = ({ id, name, label, required, options }) => {
+export const SelectInput = ({ name, label, required, options }) => {
   return (
     <TextField id="is_active" select required={true} label="Active">
       <MenuItem>{options.value}</MenuItem>
     </TextField>
-  )
-}
+  );
+};
