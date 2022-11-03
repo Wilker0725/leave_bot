@@ -10,6 +10,8 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     end_date?: string;
     page?: string;
     limit?: string;
+    sort_by?: string;
+    direction?: string;
   };
 }
 
@@ -23,12 +25,27 @@ export default async function handler(
   switch (method) {
     case "GET":
       try {
-        const { team_name, start_date, end_date, page, limit } = query;
+        const {
+          team_name,
+          start_date,
+          end_date,
+          page,
+          limit,
+          sort_by,
+          direction,
+        } = query;
 
         const currentPage = page ? parseInt(page as string, 10) : Constant.PAGE;
         const currentLimit = limit
           ? parseInt(limit as string, 10)
           : Constant.LIMIT;
+
+        const currentSort = sort_by
+          ? removeQuotes(sort_by)
+          : Constant.ORDER_BY.leaves.sort_by;
+        const currentDirection = direction
+          ? removeQuotes(direction)
+          : Constant.ORDER_BY.leaves.direction;
 
         const queryFilter = {
           where: {
@@ -47,9 +64,23 @@ export default async function handler(
           },
         };
 
+        const orderBy =
+          currentSort === "team_name"
+            ? {
+                user: {
+                  [currentSort]: currentDirection,
+                },
+              }
+            : [
+                {
+                  [currentSort]: currentDirection,
+                },
+              ];
+
         const leaves = await prisma.leaves.findMany({
           skip: (currentPage - 1) * currentLimit,
           take: currentLimit * 1,
+          orderBy: orderBy,
           ...queryFilter,
           include: {
             user: true,

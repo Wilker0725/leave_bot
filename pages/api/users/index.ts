@@ -12,6 +12,8 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     cognizant_user_id?: string;
     page?: string;
     limit?: string;
+    sort_by?: string;
+    direction?: string;
   };
 }
 
@@ -31,11 +33,20 @@ export async function handler(
           cognizant_user_id,
           page,
           limit,
+          sort_by,
+          direction,
         } = query;
         const currentPage = page ? parseInt(page as string, 10) : Constant.PAGE;
         const currentLimit = limit
           ? parseInt(limit as string, 10)
           : Constant.LIMIT;
+
+        const currentSort = sort_by
+          ? removeQuotes(sort_by)
+          : Constant.ORDER_BY.users.sort_by;
+        const currentDirection = direction
+          ? removeQuotes(direction)
+          : Constant.ORDER_BY.users.direction;
 
         const queryFilter = {
           where: {
@@ -52,9 +63,16 @@ export async function handler(
           },
         };
 
+        const orderBy = [
+          {
+            [currentSort]: currentDirection,
+          },
+        ];
+
         const users = await prisma.users.findMany({
           skip: (currentPage - 1) * currentLimit,
           take: currentLimit * 1,
+          orderBy: orderBy,
           ...queryFilter,
           include: {
             _count: true,
@@ -116,11 +134,9 @@ export async function handler(
       }
       break;
     default:
-      res
-        .status(500)
-        .json({
-          error: `${method} request was not supported for this api endpoint.`,
-        });
+      res.status(500).json({
+        error: `${method} request was not supported for this api endpoint.`,
+      });
       break;
   }
 }
