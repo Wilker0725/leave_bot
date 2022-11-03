@@ -49,7 +49,9 @@ const EditUserForm = ({ id }) => {
     setEditUser(user);
   }, [user]);
 
-  const onSaveUser = async () => {
+  const onSaveUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
       await updateUser({
         id: user.id,
@@ -79,19 +81,15 @@ const EditUserForm = ({ id }) => {
     return <p>Loading</p>;
 
   return (
-    <Grid container spacing={2} mt={4}>
+    <Grid component={"form"} container spacing={2} mt={4} onSubmit={onSaveUser}>
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
             {user.name}
           </Typography>
           <Box display={"flex"}>
-            <IconButton color="info">
-              <SaveIcon
-                fontSize="large"
-                className="cursor"
-                onClick={onSaveUser}
-              />
+            <IconButton color="info" type="submit">
+              <SaveIcon fontSize="large" className="cursor" />
             </IconButton>
             <Confirmation
               onClickYes={onDeleteUser}
@@ -114,11 +112,14 @@ const EditUserForm = ({ id }) => {
             placeholder="Cognizant Username"
             value={editUser?.cognizant_username || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.cognizant_username.trim() === "",
-              helperText:
-                editUser.cognizant_username.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["cognizant_username"] && {
+                error: editUser.cognizant_username.trim() === "",
+                helperText:
+                  editUser.cognizant_username.trim() === ""
+                    ? "Empty field"
+                    : "",
+              })}
           />
         </FormGroup>
       </Grid>
@@ -132,11 +133,12 @@ const EditUserForm = ({ id }) => {
             placeholder="Cognizant Id"
             value={editUser?.cognizant_user_id || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.cognizant_user_id.trim() === "",
-              helperText:
-                editUser.cognizant_user_id.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["cognizant_user_id"] && {
+                error: editUser.cognizant_user_id.trim() === "",
+                helperText:
+                  editUser.cognizant_user_id.trim() === "" ? "Empty field" : "",
+              })}
           />
         </FormGroup>
       </Grid>
@@ -150,11 +152,12 @@ const EditUserForm = ({ id }) => {
             placeholder="First Name"
             value={editUser?.first_name || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.first_name.trim() === "",
-              helperText:
-                editUser.first_name.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["first_name"] && {
+                error: editUser.first_name.trim() === "",
+                helperText:
+                  editUser.first_name.trim() === "" ? "Empty field" : "",
+              })}
           />
         </FormGroup>
       </Grid>
@@ -168,10 +171,12 @@ const EditUserForm = ({ id }) => {
             placeholder="Last Name"
             value={editUser?.last_name || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.last_name.trim() === "",
-              helperText: editUser.last_name.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["last_name"] && {
+                error: editUser.last_name.trim() === "",
+                helperText:
+                  editUser.last_name.trim() === "" ? "Empty field" : "",
+              })}
           />
         </FormGroup>
       </Grid>
@@ -185,10 +190,11 @@ const EditUserForm = ({ id }) => {
             placeholder="Role"
             value={editUser?.role || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.role.trim() === "",
-              helperText: editUser.role.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["role"] && {
+                error: editUser.role.trim() === "",
+                helperText: editUser.role.trim() === "" ? "Empty field" : "",
+              })}
           />
         </FormGroup>
       </Grid>
@@ -214,10 +220,12 @@ const EditUserForm = ({ id }) => {
             placeholder="Team Name"
             value={editUser?.team_name || ""}
             onChange={handleOnChangeText}
-            {...(editUser && {
-              error: editUser.team_name.trim() === "",
-              helperText: editUser.team_name.trim() === "" ? "Empty field" : "",
-            })}
+            {...(editUser &&
+              editUser["team_name"] && {
+                error: editUser.team_name.trim() === "",
+                helperText:
+                  editUser.team_name.trim() === "" ? "Empty field" : "",
+              })}
           />
         </FormGroup>
       </Grid>
