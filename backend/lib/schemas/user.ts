@@ -1,6 +1,6 @@
 import { object, string, TypeOf } from "yup";
 
-export const userSchema = object({
+export const userSchema = object().shape({
   cognizant_user_id: string().required(),
   cognizant_username: string().required(),
   name: string().required(),

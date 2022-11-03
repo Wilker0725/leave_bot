@@ -46,8 +46,6 @@ model leaves {
   leave_type_id Int?
   leave_types   leave_types? @relation(fields: [leave_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_1258ed7339")
   user          users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([user_id], map: "fk_rails")
 }
 
 model project_teams {
@@ -99,6 +97,8 @@ model users {
   project_team_id      Int?
   service_line_id      Int?
   is_active            Boolean?       @default(true)
+  specialization       String?        @db.VarChar
+  skill_level          String?        @db.VarChar
   project_teams        project_teams? @relation(fields: [project_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_3ffdfa6c22")
   service_lines        service_lines? @relation(fields: [service_line_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_7871c505a8")
   leave                leaves[]
