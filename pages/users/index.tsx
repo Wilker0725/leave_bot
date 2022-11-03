@@ -1,10 +1,11 @@
+import NextLink from "next/link"
 import Search from "@/components/Search/Search"
 import UsersList from "@/features/users/UsersList"
-import { Button, Collapse, IconButton, Stack, Typography } from "@mui/material"
-import { Box } from "@mui/system"
+import { IconButton, Stack } from "@mui/material"
 import Drawer from "@mui/material/Drawer"
+import Link from "@mui/material/Link"
 import Divider from "@mui/material/Divider"
-
+import AddIcon from '@mui/icons-material/Add';
 import { FormEvent, useState } from "react"
 import Container from "@mui/material/Container"
 import { GridSearchIcon } from "@mui/x-data-grid"
@@ -86,6 +87,13 @@ const User = () => {
               <RestartAltIcon />
             </IconButton>
           ) : null}
+          <NextLink href="/users/new" passHref>
+            <Link>
+              <IconButton color={"info"}>
+                <AddIcon />
+              </IconButton>
+            </Link>
+          </NextLink>
         </Stack>
         <Drawer
           anchor={"top"}
