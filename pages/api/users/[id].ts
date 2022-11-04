@@ -101,7 +101,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         });
 
-        res.status(204);
+        res.status(204).json({ message: 'Successful'});
       } catch (error) {
         res
           .status(500)

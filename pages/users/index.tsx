@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import UsersList from "@/features/users/UsersList";
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, SelectChangeEvent, Stack } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import Link from "@mui/material/Link";
 import AddIcon from "@mui/icons-material/Add";
@@ -13,10 +13,13 @@ import {
   setUserSearch,
   resetQuery,
   setUserPage,
+  selectUserIsSearch,
+  setIsSearch,
 } from "@/features/users/userSlice";
 import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SearchUser from "@/features/users/SearchUser";
+import { useSelector } from "react-redux";
 
 type typeFormData = {
   projectName?: string;
@@ -27,15 +30,16 @@ type typeFormData = {
 
 const User = () => {
   const dispatch = useAppDispatch();
+  const isSearch = useSelector(selectUserIsSearch);
 
   const [formData, setFormData] = useState<typeFormData | object>({});
-  const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const name = event.target.id;
+    const name = event.target.name;
+
     setFormData({ ...formData, [name]: event.target.value.trim() });
   };
 
@@ -47,7 +51,7 @@ const User = () => {
     dispatch(setUserPage(0));
     dispatch(setUserPageQuery(`page=1&limit=10&${userQuery}`));
 
-    setIsSearch(true);
+    dispatch(setIsSearch(true));
 
     // reset state
     setIsSearchOpen(false);
@@ -80,7 +84,6 @@ const User = () => {
               style={{ paddingLeft: 0 }}
               onClick={() => {
                 dispatch(resetQuery({}));
-                setIsSearch(false);
               }}
             >
               <RestartAltIcon />
@@ -100,6 +103,7 @@ const User = () => {
           onClose={toggleDrawer(false)}
         >
           <SearchUser
+            formData={formData}
             onChangeText={handleSearchInput}
             onSubmit={handleOnSubmit}
           />

@@ -20,6 +20,7 @@ const userReducer = createSlice({
     page: 0,
     limit: 10,
     search: "",
+    isSearch: false,
   },
   reducers: {
     setUserPageQuery: (state, action) => {
@@ -30,27 +31,30 @@ const userReducer = createSlice({
       state.page = action.payload
     },
     setUserPageLimit: (state, action) => {
-      console.log("action.payload limit: ", action.payload)
-
       state.limit = action.payload
     },
     setUserSearch: (state, action) => {
       state.search = action.payload
     },
+    setIsSearch: (state, action) => {
+      state.isSearch = action.payload
+    },
     resetQuery: (state, action) => {
       state.query = "page=1&limit=10"
       state.search = ""
       state.page = 0
+      state.isSearch = false
     },
   },
 })
 
 export const {
   setUserPageQuery,
-  setUserSearch,
-  resetQuery,
   setUserPage,
   setUserPageLimit,
+  setUserSearch,
+  setIsSearch,
+  resetQuery,
 } = userReducer.actions
 
 export default userReducer.reducer
@@ -59,3 +63,4 @@ export const selectUserQuery = (state) => state.user.query
 export const selectUserSearch = (state) => state.user.search
 export const selectUserPage = (state) => state.user.page
 export const selectUserLimit = (state) => state.user.limit
+export const selectUserIsSearch = (state) => state.user.isSearch

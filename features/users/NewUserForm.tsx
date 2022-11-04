@@ -27,8 +27,8 @@ const NewUserForm = () => {
 
   const onCreateUser = async (e) => {
     e.preventDefault();
-    console.log("newUser: ", newUser);
-    // await addNewUser(newUser);
+
+    await addNewUser(newUser);
   };
 
   const handleOnChangeText = (
