@@ -46,22 +46,22 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       },
     }),
     addNewUser: builder.mutation({
-      query: (initialUserData) => ({
+      query: (data) => ({
         url: "/api/users",
         method: "POST",
         body: {
-          ...initialUserData,
+          ...data,
         },
       }),
       invalidatesTags: [{ type: "User", id: "LIST" }],
     }),
     updateUser: builder.mutation({
-      query: (initialUserData) => {
+      query: (data) => {
         return {
-          url: `/api/users/${initialUserData.id}`,
+          url: `/api/users/${data.id}`,
           method: "PUT",
           body: {
-            ...initialUserData,
+            ...data,
           },
         }
       },
@@ -69,7 +69,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation({
       query: ({ id }) => ({
-        url: `/api/users`,
+        url: `/api/users/${id}`,
         method: "DELETE",
         body: { id },
       }),

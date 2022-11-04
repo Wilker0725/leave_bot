@@ -4,7 +4,7 @@ import {
   usersApiSlice,
   useUpdateUserMutation,
 } from "@/features/users/usersApiSlice";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import FormGroup from "@mui/material/FormGroup";
@@ -19,6 +19,15 @@ import { TypeUser } from "@/features/users/types";
 import { selectUserQuery, setUserPageQuery } from "./userSlice";
 import { useAppDispatch } from "@/app/store";
 import { IconButton } from "@mui/material";
+
+const REQUIRED_FIELD = [
+  "cognizant_username",
+  "cognizant_user_id",
+  "first_name",
+  "last_name",
+  "team_name",
+  "role",
+];
 
 const EditUserForm = ({ id }) => {
   const router = useRouter();
@@ -44,9 +53,36 @@ const EditUserForm = ({ id }) => {
   ] = useDeleteUserMutation();
 
   const [editUser, setEditUser] = useState<TypeUser | any>({});
+  const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {
-    setEditUser(user);
+    if (user === undefined) return;
+
+    const {
+      account_name,
+      cognizant_user_id,
+      cognizant_username,
+      first_name,
+      last_name,
+      name,
+      team_name,
+      telegram_ref_id,
+      title,
+      role,
+    } = user;
+
+    setEditUser({
+      account_name,
+      cognizant_user_id,
+      cognizant_username,
+      first_name,
+      last_name,
+      name,
+      team_name,
+      telegram_ref_id,
+      title,
+      role,
+    });
   }, [user]);
 
   const onSaveUser = async (e: React.FormEvent) => {
@@ -57,6 +93,7 @@ const EditUserForm = ({ id }) => {
         id: user.id,
         ...editUser,
       });
+
       router.push("/users");
     } catch (error) {}
   };
@@ -65,6 +102,10 @@ const EditUserForm = ({ id }) => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const { name, value }: { name: string; value?: string } = e.target;
+
+    if (dirtyFields[name] === undefined)
+      setDirtyFields({ ...dirtyFields, [name]: true });
+
     setEditUser({ ...editUser, [name]: value });
   };
 
@@ -74,22 +115,47 @@ const EditUserForm = ({ id }) => {
         id: user.id,
       });
       router.push("/users");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Delete Error: ", error);
+    }
   };
 
   if (!user || editUser === undefined || Object.keys(editUser).length === 0)
     return <p>Loading</p>;
+
+  let canSave = false;
+
+  if (Object.keys(editUser).length > 0) {
+    canSave =
+      Object.entries(editUser)
+        .filter(([key]) => REQUIRED_FIELD.includes(key))
+        .every((item: any) => {
+          if (item[1] === null || item[1] === "") return false;
+
+          const hasValue = item[1].trim().length > 0;
+
+          return hasValue;
+        }) && !isLoading;
+  }
 
   return (
     <Grid component={"form"} container spacing={2} mt={4} onSubmit={onSaveUser}>
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
-            {user.name}
+            {user.cognizant_username}
           </Typography>
           <Box display={"flex"}>
-            <IconButton color="info" type="submit">
-              <SaveIcon fontSize="large" className="cursor" />
+            <IconButton
+              color="info"
+              type="submit"
+              style={{
+                opacity: canSave ? "1" : "0.5",
+                cursor: canSave ? "pointer" : "not-allowed",
+                pointerEvents: canSave ? "auto" : "none",
+              }}
+            >
+              <SaveIcon fontSize="large" />
             </IconButton>
             <Confirmation
               onClickYes={onDeleteUser}
@@ -113,7 +179,8 @@ const EditUserForm = ({ id }) => {
             value={editUser?.cognizant_username || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["cognizant_username"] && {
+              dirtyFields["cognizant_username"] &&
+              editUser["cognizant_username"].length === 0 && {
                 error: editUser.cognizant_username.trim() === "",
                 helperText:
                   editUser.cognizant_username.trim() === ""
@@ -134,7 +201,8 @@ const EditUserForm = ({ id }) => {
             value={editUser?.cognizant_user_id || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["cognizant_user_id"] && {
+              dirtyFields["cognizant_user_id"] &&
+              editUser["cognizant_user_id"].length === 0 && {
                 error: editUser.cognizant_user_id.trim() === "",
                 helperText:
                   editUser.cognizant_user_id.trim() === "" ? "Empty field" : "",
@@ -153,7 +221,8 @@ const EditUserForm = ({ id }) => {
             value={editUser?.first_name || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["first_name"] && {
+              dirtyFields["first_name"] &&
+              editUser["first_name"].length === 0 && {
                 error: editUser.first_name.trim() === "",
                 helperText:
                   editUser.first_name.trim() === "" ? "Empty field" : "",
@@ -172,10 +241,30 @@ const EditUserForm = ({ id }) => {
             value={editUser?.last_name || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["last_name"] && {
+              dirtyFields["last_name"] &&
+              editUser["last_name"].length === 0 && {
                 error: editUser.last_name.trim() === "",
                 helperText:
                   editUser.last_name.trim() === "" ? "Empty field" : "",
+              })}
+          />
+        </FormGroup>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <FormGroup>
+          <TextField
+            required={true}
+            id="name"
+            name="name"
+            label="Name"
+            placeholder="Name"
+            value={editUser?.name || ""}
+            onChange={handleOnChangeText}
+            {...(editUser &&
+              dirtyFields["name"] &&
+              editUser["name"].length === 0 && {
+                error: editUser.name.trim() === "",
+                helperText: editUser.name.trim() === "" ? "Empty field" : "",
               })}
           />
         </FormGroup>
@@ -191,7 +280,8 @@ const EditUserForm = ({ id }) => {
             value={editUser?.role || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["role"] && {
+              dirtyFields["role"] &&
+              editUser["role"].length === 0 && {
                 error: editUser.role.trim() === "",
                 helperText: editUser.role.trim() === "" ? "Empty field" : "",
               })}
@@ -221,7 +311,8 @@ const EditUserForm = ({ id }) => {
             value={editUser?.team_name || ""}
             onChange={handleOnChangeText}
             {...(editUser &&
-              editUser["team_name"] && {
+              dirtyFields["team_name"] &&
+              editUser["team_name"].length === 0 && {
                 error: editUser.team_name.trim() === "",
                 helperText:
                   editUser.team_name.trim() === "" ? "Empty field" : "",
