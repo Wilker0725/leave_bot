@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import UsersList from "@/features/users/UsersList";
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, SelectChangeEvent, Stack } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import Link from "@mui/material/Link";
 import AddIcon from "@mui/icons-material/Add";
@@ -38,7 +38,8 @@ const User = () => {
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const name = event.target.id;
+    const name = event.target.name;
+
     setFormData({ ...formData, [name]: event.target.value.trim() });
   };
 
@@ -102,6 +103,7 @@ const User = () => {
           onClose={toggleDrawer(false)}
         >
           <SearchUser
+            formData={formData}
             onChangeText={handleSearchInput}
             onSubmit={handleOnSubmit}
           />

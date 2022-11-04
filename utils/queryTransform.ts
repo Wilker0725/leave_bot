@@ -12,7 +12,15 @@ export const queryToObject = (args: string) => {
 }
 
 export const objectToQuery = (args) => {
-  const queryString = new URLSearchParams(args).toString()
+  /**
+    sort_by is a query string eg:sort_by=team_name&direction=desc 
+    instead of sort_by: "team_name", direction: "desc"
+  */
+  const { sort_by, ...rest} = args;
+  
+  let queryString = new URLSearchParams(rest).toString()
+  
+  queryString = `${queryString}${sort_by ? sort_by : ""}`;
 
   return queryString
 }
