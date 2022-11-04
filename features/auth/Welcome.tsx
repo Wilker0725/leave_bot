@@ -2,7 +2,6 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import RecipeReviewCard from "@/components/RecipeReviewCard";
 import GroupIcon from "@mui/icons-material/Group";
-import VaccinesIcon from "@mui/icons-material/Vaccines";
 import HotelOutlinedIcon from "@mui/icons-material/HotelOutlined";
 
 const Welcome = () => {
@@ -20,13 +19,6 @@ const Welcome = () => {
           <Link href="/users" passHref>
             <RecipeReviewCard message={"View Users"}>
               <GroupIcon fontSize="large" />
-            </RecipeReviewCard>
-          </Link>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Link href="/projects" passHref>
-            <RecipeReviewCard message={"View Projects"}>
-              <VaccinesIcon fontSize="large" />
             </RecipeReviewCard>
           </Link>
         </Grid>
