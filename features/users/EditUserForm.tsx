@@ -16,7 +16,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation";
 import { TypeUser } from "@/features/users/types";
-import { selectUserQuery, setUserPageQuery } from "./userSlice";
+import { selectUserQuery, setUserPageQuery } from "@/features/users/userSlice";
 import { useAppDispatch } from "@/app/store";
 import { IconButton } from "@mui/material";
 
@@ -52,7 +52,7 @@ const EditUserForm = ({ id }) => {
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
   ] = useDeleteUserMutation();
 
-  const [editUser, setEditUser] = useState<TypeUser | any>({});
+  const [editUser, setEditUser] = useState<Partial<TypeUser>>();
   const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {

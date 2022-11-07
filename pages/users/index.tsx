@@ -22,10 +22,10 @@ import SearchUser from "@/features/users/SearchUser";
 import { useSelector } from "react-redux";
 
 type typeFormData = {
-  projectName?: string;
-  employeeName?: string;
-  employeeId?: string;
-  role?: string;
+  cognizant_username?: string;
+  cognizant_user_id?: string;
+  team_name?: string;
+  sort_by?: string;
 };
 
 const User = () => {
