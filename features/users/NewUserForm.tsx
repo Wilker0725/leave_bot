@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAddNewUserMutation } from "@/features/users/usersApiSlice";
 import { useRouter } from "next/router";
 import SaveIcon from "@mui/icons-material/Save";
@@ -13,7 +13,7 @@ import Toast from "@/components/Toast";
 
 const NewUserForm = () => {
   const router = useRouter();
-
+  const inputRef = useRef<HTMLDivElement>();
   const [addNewUser, { isLoading, isSuccess, isError, error }]: any =
     useAddNewUserMutation(undefined);
 
@@ -23,6 +23,12 @@ const NewUserForm = () => {
   useEffect(() => {
     if (isSuccess) router.push("/users");
   }, [isSuccess, router]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const onCreateUser = async (e) => {
     e.preventDefault();
@@ -76,6 +82,7 @@ const NewUserForm = () => {
       <Grid item xs={12} md={6}>
         <FormGroup>
           <TextField
+            inputRef={inputRef}
             required={true}
             id="cognizant_username"
             name="cognizant_username"

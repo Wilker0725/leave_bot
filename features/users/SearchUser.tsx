@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { GridSearchIcon } from "@mui/x-data-grid";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { typeUserFormData } from "./types";
 
 type typeSearchUser = {
@@ -25,6 +25,18 @@ type typeSearchUser = {
 };
 
 const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      inputRef.current.focus();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <Search onSubmit={onSubmit}>
       <Grid item xs={6} md={3}>
@@ -35,6 +47,8 @@ const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
           label="User Name"
           variant="outlined"
           onChange={onChangeText}
+          autoFocus={true}
+          inputRef={inputRef}
         />
       </Grid>
       <Grid item xs={6} md={3}>

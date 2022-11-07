@@ -50,10 +50,10 @@ const Confirmation = ({ text, onClickYes, children }: PropsConfirmation) => {
             mt={4}
             spacing={2}
           >
-            <Button variant="outlined" onClick={onClickYes} color="error">
+            <Button variant="contained" onClick={onClickYes} color="error">
               Yes
             </Button>
-            <Button variant="outlined" onClick={handleClose} color="info">
+            <Button variant="contained" onClick={handleClose} color="info">
               No
             </Button>
           </Stack>
