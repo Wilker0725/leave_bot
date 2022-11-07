@@ -19,6 +19,7 @@ import { TypeUser } from "@/features/users/types";
 import { selectUserQuery, setUserPageQuery } from "./userSlice";
 import { useAppDispatch } from "@/app/store";
 import { IconButton } from "@mui/material";
+import Toast from "@/components/Toast";
 
 const REQUIRED_FIELD = [
   "cognizant_username",
@@ -95,7 +96,14 @@ const EditUserForm = ({ id }) => {
       });
 
       router.push("/users");
-    } catch (error) {}
+      Toast({ type: "success", message: "User details successfuly updated." });
+    } catch (error) {
+      console.error("Update User Error: ", error);
+      Toast({
+        type: "error",
+        message: "Something when wrong, unable to update user details.",
+      });
+    }
   };
 
   const handleOnChangeText = (
@@ -115,8 +123,13 @@ const EditUserForm = ({ id }) => {
         id: user.id,
       });
       router.push("/users");
+      Toast({ type: "success", message: "User successfuly deleted." });
     } catch (error) {
-      console.error("Delete Error: ", error);
+      console.error("Delete User Error: ", error);
+      Toast({
+        type: "error",
+        message: "Something when wrong, unable to deleted user.",
+      });
     }
   };
 

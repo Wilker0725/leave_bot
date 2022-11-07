@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { TypeUser } from "@/features/users/types";
 import { IconButton } from "@mui/material";
+import Toast from "@/components/Toast";
 
 const NewUserForm = () => {
   const router = useRouter();
@@ -28,7 +29,16 @@ const NewUserForm = () => {
   const onCreateUser = async (e) => {
     e.preventDefault();
 
-    await addNewUser(newUser);
+    try {
+      await addNewUser(newUser);
+      Toast({ type: "success", message: "User successfuly created." });
+    } catch (error) {
+      console.error("Create User Error: ", error);
+      Toast({
+        type: "error",
+        message: "Something when wrong, unable to create user.",
+      });
+    }
   };
 
   const handleOnChangeText = (

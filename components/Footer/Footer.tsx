@@ -1,5 +1,5 @@
-import Container from "@mui/material/Container"
-import { Box } from "@mui/system"
+import Container from "@mui/material/Container";
+import { Box } from "@mui/system";
 
 const Footer = () => {
   return (
@@ -10,12 +10,13 @@ const Footer = () => {
           p: 2,
           color: "#fff",
           fontSize: "14px",
+          mt: 4,
         }}
       >
         Government Technology Agency (GovTech)
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
