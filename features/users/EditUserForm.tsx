@@ -180,7 +180,7 @@ const EditUserForm = ({ id }) => {
             </IconButton>
             <Confirmation
               onClickYes={onDeleteUser}
-              text={"Are you sure want to remove?"}
+              text={`Are you sure want to remove ${editUser?.cognizant_username}?`}
             >
               <IconButton color="info">
                 <DeleteIcon fontSize="large" className="cursor" />

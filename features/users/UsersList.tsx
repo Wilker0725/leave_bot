@@ -15,6 +15,8 @@ import {
 } from "@/features/users/userSlice";
 import { useSelector } from "react-redux";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import { LinearProgress } from "@mui/material";
+import Toast from "@/components/Toast";
 
 const UsersList = () => {
   const dispatch = useAppDispatch();
@@ -45,8 +47,13 @@ const UsersList = () => {
 
   let content = null;
 
-  if (isLoading) content = <LoadingSkeleton width={"100%"} height={50} />;
-  if (isError) content = <p>Error</p>;
+  // if (isLoading) content = <LoadingSkeleton width={"100%"} height={50} />;
+  if (isLoading) content = <LinearProgress color="inherit" />;
+  if (isError)
+    Toast({
+      type: "error",
+      message: "Something when wrong, unable to retrieve users list.",
+    });
 
   if (isSuccess) {
     let { ids, entities } = users;
