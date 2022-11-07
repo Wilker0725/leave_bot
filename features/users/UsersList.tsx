@@ -1,5 +1,6 @@
 import { useAppDispatch } from "@/app/store";
 import CustomizedTables from "@/components/Tables/CustomizedTable";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 import User from "@/features/users/User";
 import { useGetUsersQuery } from "@/features/users/usersApiSlice";
 import { useEffect } from "react";
@@ -44,7 +45,7 @@ const UsersList = () => {
 
   let content = null;
 
-  if (isLoading) content = <p>Loading...</p>;
+  if (isLoading) content = <LoadingSkeleton width={"100%"} height={50} />;
   if (isError) content = <p>Error</p>;
 
   if (isSuccess) {
