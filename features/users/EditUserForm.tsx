@@ -18,8 +18,16 @@ import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation";
 import { TypeUser } from "@/features/users/types";
 import { selectUserQuery, setUserPageQuery } from "@/features/users/userSlice";
 import { useAppDispatch } from "@/app/store";
-import { IconButton } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import Toast from "@/components/Toast";
+import { ROLES } from "@/config/roles";
 
 const REQUIRED_FIELD = [
   "cognizant_username",
@@ -114,7 +122,9 @@ const EditUserForm = ({ id }) => {
   };
 
   const handleOnChangeText = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+      | SelectChangeEvent
   ) => {
     const { name, value }: { name: string; value?: string } = e.target;
 
@@ -311,28 +321,26 @@ const EditUserForm = ({ id }) => {
         </FormGroup>
       </Grid>
       <Grid item xs={12} md={6}>
-        <FormGroup>
-          <TextField
-            required={true}
-            id="role"
+        <FormControl fullWidth>
+          <InputLabel id="select-role-label">Age</InputLabel>
+          <Select
+            labelId="select-role-label"
+            id="select-role"
             name="role"
             label="Role"
-            placeholder="Role"
             value={editUser?.role || ""}
             onChange={handleOnChangeText}
-            {...(editUser &&
-              dirtyFields["role"] &&
-              editUser["role"].length === 0 && {
-                error: editUser.role.trim() === "",
-                helperText: editUser.role.trim() === "" ? "Empty field" : "",
-              })}
-            {...(error &&
-              error.data.error["role"] && {
-                error: true,
-                helperText: error.data.error["role"],
-              })}
-          />
-        </FormGroup>
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {Object.keys(ROLES).map((key) => (
+              <MenuItem key={key} value={key}>
+                {ROLES[key]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
         <FormGroup>
