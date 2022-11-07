@@ -1,14 +1,14 @@
-import * as React from "react"
-import { styled } from "@mui/material/styles"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell, { tableCellClasses } from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
-import Paper from "@mui/material/Paper"
-import TableFooter from "@mui/material/TableFooter"
-import Pagination from "@/components/Pagination"
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import TableFooter from "@mui/material/TableFooter";
+import Pagination from "@/components/Pagination";
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -18,7 +18,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
-}))
+}));
 
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -28,18 +28,18 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
-}))
+}));
 
 type PropsCustomizedTable = {
-  children: React.ReactNode | any
-  setPage: (value: number) => void
-  page: number
-  setRowsPerPage: (value: number) => void
-  rowsPerPage: number
-  headers: string[]
-  minWidth?: number
-  totalPage: number
-}
+  children: React.ReactNode | any;
+  setPage: (value: number) => void;
+  page: number;
+  setRowsPerPage: (value: number) => void;
+  rowsPerPage: number;
+  headers: string[];
+  minWidth?: number;
+  totalPage: number;
+};
 
 export default function CustomizedTable({
   children,
@@ -51,22 +51,19 @@ export default function CustomizedTable({
   minWidth,
   totalPage,
 }: PropsCustomizedTable) {
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalPage) : 0
-
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -81,10 +78,12 @@ export default function CustomizedTable({
         </TableHead>
         <TableBody>
           {children}
-          {emptyRows > 0 && (
+          {totalPage === 0 && (
             <>
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={4} />
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  No data found.
+                </TableCell>
               </TableRow>
             </>
           )}
@@ -102,5 +101,5 @@ export default function CustomizedTable({
         </TableFooter>
       </Table>
     </TableContainer>
-  )
+  );
 }
