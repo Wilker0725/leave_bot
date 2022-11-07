@@ -8,8 +8,17 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { TypeUser } from "@/features/users/types";
-import { IconButton } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import Toast from "@/components/Toast";
+import { ROLES } from "@/config/roles";
 
 const NewUserForm = () => {
   const router = useRouter();
@@ -48,7 +57,9 @@ const NewUserForm = () => {
   };
 
   const handleOnChangeText = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+      | SelectChangeEvent
   ) => {
     const { name, value }: { name: string; value?: string } = e.target;
 
@@ -62,6 +73,7 @@ const NewUserForm = () => {
   const content = (
     <Grid
       component={"form"}
+      noValidate
       container
       spacing={2}
       mt={4}
@@ -195,27 +207,37 @@ const NewUserForm = () => {
         </FormGroup>
       </Grid>
       <Grid item xs={12} md={6}>
-        <FormGroup>
-          <TextField
+        <FormControl
+          fullWidth
+          {...(error &&
+            error.data.error["role"] && {
+              error,
+            })}
+        >
+          <InputLabel id="Select-role-label">Role</InputLabel>
+          <Select
             required={true}
-            id="role"
+            autoComplete="nope"
+            labelId="select-role-label"
+            id="select-role"
             name="role"
             label="Role"
-            placeholder="Role"
             value={newUser?.role || ""}
             onChange={handleOnChangeText}
-            {...(newUser &&
-              dirtyFields["role"] && {
-                error: newUser.role.trim() === "",
-                helperText: newUser.role.trim() === "" ? "Empty field" : "",
-              })}
-            {...(error &&
-              error.data.error["role"] && {
-                error: true,
-                helperText: error.data.error["role"],
-              })}
-          />
-        </FormGroup>
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {Object.keys(ROLES).map((key) => (
+              <MenuItem key={key} value={key}>
+                {ROLES[key]}
+              </MenuItem>
+            ))}
+          </Select>
+          {error && error.data.error["role"] ? (
+            <FormHelperText>{error.data.error["role"]}</FormHelperText>
+          ) : null}
+        </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
         <FormGroup>

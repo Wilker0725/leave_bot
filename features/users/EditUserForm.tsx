@@ -170,7 +170,14 @@ const EditUserForm = ({ id }) => {
   }
 
   return (
-    <Grid component={"form"} container spacing={2} mt={4} onSubmit={onSaveUser}>
+    <Grid
+      component={"form"}
+      noValidate
+      container
+      spacing={2}
+      mt={4}
+      onSubmit={onSaveUser}
+    >
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
@@ -322,8 +329,9 @@ const EditUserForm = ({ id }) => {
       </Grid>
       <Grid item xs={12} md={6}>
         <FormControl fullWidth>
-          <InputLabel id="select-role-label">Age</InputLabel>
+          <InputLabel id="select-role-label">Role</InputLabel>
           <Select
+            required={true}
             labelId="select-role-label"
             id="select-role"
             name="role"
