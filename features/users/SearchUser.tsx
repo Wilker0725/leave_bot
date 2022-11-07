@@ -6,13 +6,25 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import React from "react";
+import { typeUserFormData } from "./types";
 
-const SearchUser = ({ onChangeText, onSubmit, formData }) => {
+type typeSearchUser = {
+  onChangeText: (
+    event:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent
+  ) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  formData: Partial<typeUserFormData>;
+};
+
+const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
   return (
     <Search onSubmit={onSubmit}>
       <Grid item xs={6} md={3}>
@@ -55,7 +67,7 @@ const SearchUser = ({ onChangeText, onSubmit, formData }) => {
             label="Sort By"
             variant="outlined"
             onChange={onChangeText}
-            value={formData.sort_by || ""}
+            value={formData?.sort_by || ""}
           >
             <MenuItem value="">
               <em>None</em>

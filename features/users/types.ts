@@ -22,3 +22,10 @@ export type TypeUser = {
   account_name: string
 }
 
+export type typeUserFormData = {
+  cognizant_username: string
+  cognizant_user_id: string
+  team_name: string
+  sort_by: string
+}
+

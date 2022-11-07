@@ -20,23 +20,19 @@ import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SearchUser from "@/features/users/SearchUser";
 import { useSelector } from "react-redux";
-
-type typeFormData = {
-  cognizant_username?: string;
-  cognizant_user_id?: string;
-  team_name?: string;
-  sort_by?: string;
-};
+import { typeUserFormData } from "@/features/users/types";
 
 const User = () => {
   const dispatch = useAppDispatch();
   const isSearch = useSelector(selectUserIsSearch);
 
-  const [formData, setFormData] = useState<typeFormData | object>({});
+  const [formData, setFormData] = useState<Partial<typeUserFormData>>();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   const handleSearchInput = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent
   ) => {
     const name = event.target.name;
 
