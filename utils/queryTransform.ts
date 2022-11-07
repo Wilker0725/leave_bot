@@ -18,7 +18,7 @@ export const objectToQuery = (args) => {
   */
   const { sort_by, ...rest} = args;
   
-  let queryString = new URLSearchParams(rest).toString()
+  let queryString = new URLSearchParams(rest).toString().replace(/\+/g, " ");
   
   queryString = `${queryString}${sort_by ? sort_by : ""}`;
 
