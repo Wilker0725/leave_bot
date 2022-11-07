@@ -14,24 +14,24 @@ import Toast from "@/components/Toast";
 const NewUserForm = () => {
   const router = useRouter();
 
-  const [addNewUser, { isLoading, isSuccess, isError, error }] =
+  const [addNewUser, { isLoading, isSuccess, isError, error }]: any =
     useAddNewUserMutation(undefined);
 
   const [newUser, setNewUser] = useState<Partial<TypeUser>>();
   const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {
-    if (isSuccess) {
-      router.push("/users");
-    }
+    if (isSuccess) router.push("/users");
   }, [isSuccess, router]);
 
   const onCreateUser = async (e) => {
     e.preventDefault();
 
     try {
-      await addNewUser(newUser);
-      Toast({ type: "success", message: "User successfuly created." });
+      const res: any = await addNewUser(newUser);
+
+      if (res.data)
+        Toast({ type: "success", message: "User successfully created." });
     } catch (error) {
       console.error("Create User Error: ", error);
       Toast({
@@ -89,6 +89,11 @@ const NewUserForm = () => {
                 helperText:
                   newUser.cognizant_username.trim() === "" ? "Empty field" : "",
               })}
+            {...(error &&
+              error.data.error["cognizant_username"] && {
+                error: true,
+                helperText: error.data.error["cognizant_username"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -107,6 +112,11 @@ const NewUserForm = () => {
                 error: newUser.cognizant_user_id.trim() === "",
                 helperText:
                   newUser.cognizant_user_id.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["cognizant_user_id"] && {
+                error: true,
+                helperText: error.data.error["cognizant_user_id"],
               })}
           />
         </FormGroup>
@@ -127,6 +137,11 @@ const NewUserForm = () => {
                 helperText:
                   newUser.first_name.trim() === "" ? "Empty field" : "",
               })}
+            {...(error &&
+              error.data.error["first_name"] && {
+                error: true,
+                helperText: error.data.error["first_name"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -145,6 +160,11 @@ const NewUserForm = () => {
                 error: newUser.last_name.trim() === "",
                 helperText:
                   newUser.last_name.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["last_name"] && {
+                error: true,
+                helperText: error.data.error["last_name"],
               })}
           />
         </FormGroup>
@@ -182,6 +202,11 @@ const NewUserForm = () => {
                 error: newUser.role.trim() === "",
                 helperText: newUser.role.trim() === "" ? "Empty field" : "",
               })}
+            {...(error &&
+              error.data.error["role"] && {
+                error: true,
+                helperText: error.data.error["role"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -212,6 +237,11 @@ const NewUserForm = () => {
                 error: newUser.team_name.trim() === "",
                 helperText:
                   newUser.team_name.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["team_name"] && {
+                error: true,
+                helperText: error.data.error["team_name"],
               })}
           />
         </FormGroup>

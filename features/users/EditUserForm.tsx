@@ -45,7 +45,7 @@ const EditUserForm = ({ id }) => {
 
   const user = useSelector(selectById(id));
 
-  const [updateUser, { isLoading, isSuccess, isError, error }] =
+  const [updateUser, { isLoading, isSuccess, isError, error }]: any =
     useUpdateUserMutation();
 
   const [
@@ -86,17 +86,24 @@ const EditUserForm = ({ id }) => {
     });
   }, [user]);
 
+  useEffect(() => {
+    if (isSuccess) router.push("/users");
+  }, [isSuccess, router]);
+
   const onSaveUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await updateUser({
+      const res: any = await updateUser({
         id: user.id,
         ...editUser,
       });
 
-      router.push("/users");
-      Toast({ type: "success", message: "User details successfuly updated." });
+      if (res.data)
+        Toast({
+          type: "success",
+          message: "User details successfully updated.",
+        });
     } catch (error) {
       console.error("Update User Error: ", error);
       Toast({
@@ -122,6 +129,7 @@ const EditUserForm = ({ id }) => {
       await deleteUser({
         id: user.id,
       });
+
       router.push("/users");
       Toast({ type: "success", message: "User successfuly deleted." });
     } catch (error) {
@@ -200,6 +208,11 @@ const EditUserForm = ({ id }) => {
                     ? "Empty field"
                     : "",
               })}
+            {...(error &&
+              error.data.error["cognizant_username"] && {
+                error: true,
+                helperText: error.data.error["cognizant_username"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -219,6 +232,11 @@ const EditUserForm = ({ id }) => {
                 error: editUser.cognizant_user_id.trim() === "",
                 helperText:
                   editUser.cognizant_user_id.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["cognizant_user_id"] && {
+                error: true,
+                helperText: error.data.error["cognizant_user_id"],
               })}
           />
         </FormGroup>
@@ -260,6 +278,11 @@ const EditUserForm = ({ id }) => {
                 helperText:
                   editUser.last_name.trim() === "" ? "Empty field" : "",
               })}
+            {...(error &&
+              error.data.error["last_name"] && {
+                error: true,
+                helperText: error.data.error["last_name"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -279,6 +302,11 @@ const EditUserForm = ({ id }) => {
                 error: editUser.name.trim() === "",
                 helperText: editUser.name.trim() === "" ? "Empty field" : "",
               })}
+            {...(error &&
+              error.data.error["name"] && {
+                error: true,
+                helperText: error.data.error["name"],
+              })}
           />
         </FormGroup>
       </Grid>
@@ -297,6 +325,11 @@ const EditUserForm = ({ id }) => {
               editUser["role"].length === 0 && {
                 error: editUser.role.trim() === "",
                 helperText: editUser.role.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["role"] && {
+                error: true,
+                helperText: error.data.error["role"],
               })}
           />
         </FormGroup>
@@ -329,6 +362,11 @@ const EditUserForm = ({ id }) => {
                 error: editUser.team_name.trim() === "",
                 helperText:
                   editUser.team_name.trim() === "" ? "Empty field" : "",
+              })}
+            {...(error &&
+              error.data.error["team_name"] && {
+                error: true,
+                helperText: error.data.error["team_name"],
               })}
           />
         </FormGroup>
