@@ -6,7 +6,7 @@ import { selectLeaveById } from "@/features/leaves/leavesApiSlice";
 import {
   StyledTableCell,
   StyledTableRow,
-} from "@/components/Tables/CustomizedTable";
+} from "@/components/Tables/CustomLeaveTable";
 
 const Leaves: FC<{ id: string }> = ({ id }) => {
   const leaves = useSelector((state) => {
@@ -22,9 +22,7 @@ const Leaves: FC<{ id: string }> = ({ id }) => {
         <StyledTableCell>{leaves.leave_type}</StyledTableCell>
         <StyledTableCell>{leaves.start_date}</StyledTableCell>
         <StyledTableCell>{leaves.end_date}</StyledTableCell>
-        <StyledTableCell align="right">
-          <Link href={`/leaves/${id}`}></Link>
-        </StyledTableCell>
+        <StyledTableCell align="right"></StyledTableCell>
       </StyledTableRow>
     );
   } else return null;

@@ -1,94 +1,108 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "@/app/api/apiSlice";
+import { queryToObject } from "@/utils/queryTransform";
 
-const leavesAdapter = createEntityAdapter({});
+export const leavesAdapter = createEntityAdapter();
 
-const initialState = leavesAdapter.getInitialState();
+export const initialState = leavesAdapter.getInitialState();
 
-let totalPages = 0,
-  currentPage = 0,
-  recordCount = 0;
-
-export const LeavesApiSlice = apiSlice.injectEndpoints({
+export const leavesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLeaves: builder.query({
-      query: (page = 0) => {
-        currentPage = page;
-        return `/api/leaves?page=${page + 1}`;
+      query: (args) => {
+        let params = queryToObject(args);
+
+        return {
+          url: `/api/leaves`,
+          method: "GET",
+          params,
+        };
       },
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
       transformResponse: (responseData) => {
-        const loadedLeaves = responseData?.leaves.map((Leave) => {
-          Leave.id = Leave._id;
-          return Leave;
+        const { currentPage, recordCount, totalPages } = responseData;
+
+        const loadedleaves = responseData?.leaves.map((leaves) => leaves);
+
+        // walk around to pass page details
+        loadedleaves.push({
+          id: "pageInfo",
+          currentPage,
+          recordCount,
+          totalPages,
         });
 
-        return leavesAdapter.setAll(initialState, loadedLeaves);
+        return leavesAdapter.setAll(initialState, loadedleaves);
       },
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
-            { type: "Leave", id: "LIST" },
-            ...result.ids.map((id) => ({ type: "Leave", id })),
+            { type: "Leaves", id: "LIST" },
+            ...result.ids.map((id) => ({ type: "Leaves", id })),
           ];
-        } else return [{ type: "Leave", id: "LIST" }];
+        } else return [{ type: "Leaves", id: "LIST" }];
       },
     }),
-    addNewLeave: builder.mutation({
-      query: (initialLeaveData) => ({
-        url: "/api/Leaves",
-        method: "POST",
-        body: {
-          ...initialLeaveData,
-        },
-      }),
-      invalidatesTags: [{ type: "Leave", id: "LIST" }],
-    }),
-    updateLeave: builder.mutation({
-      query: (initialLeaveData) => {
-        return {
-          url: "/api/Leaves",
-          method: "PATCH",
-          body: {
-            ...initialLeaveData,
-          },
-        };
-      },
-      invalidatesTags: (result, error, arg) => [{ type: "Leave", id: arg.id }],
-    }),
-    deleteLeave: builder.mutation({
-      query: ({ id }) => ({
-        url: `/api/leaves`,
-        method: "DELETE",
-        body: { id },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Leave", id: arg.id }],
-    }),
+    // addNewUser: builder.mutation({
+    //   query: (data) => ({
+    //     url: "/api/users",
+    //     method: "POST",
+    //     body: {
+    //       ...data,
+    //     },
+    //   }),
+    //   invalidatesTags: [{ type: "User", id: "LIST" }],
+    // }),
+    // updateUser: builder.mutation({
+    //   query: (data) => {
+    //     return {
+    //       url: `/api/users/${data.id}`,
+    //       method: "PUT",
+    //       body: {
+    //         ...data,
+    //       },
+    //     }
+    //   },
+    //   invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
+    // }),
+    // deleteUser: builder.mutation({
+    //   query: ({ id }) => ({
+    //     url: `/api/users/${id}`,
+    //     method: "DELETE",
+    //     body: { id },
+    //   }),
+    //   invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
+    // }),
   }),
+  overrideExisting: true,
 });
-
-export { currentPage, recordCount, totalPages };
 
 export const {
   useGetLeavesQuery,
-  useAddNewLeaveMutation,
-  useUpdateLeaveMutation,
-  useDeleteLeaveMutation,
-} = LeavesApiSlice;
+  // useAddNewLeaveMutation,
+  // useUpdateLeaveMutation,
+  // useDeleteLeaMutation,
+} = leavesApiSlice;
 
-export const selectLeavesResult = LeavesApiSlice.endpoints.getLeaves.select();
+// export const getUserSelectors = (query) => {
+//   const selectUsersResult = usersApiSlice.endpoints.getUsers.select(query)
 
-// creates memoized selector
-const selectLeavesData = createSelector(selectLeavesResult, (LeavesResult) => {
-  return LeavesResult.data;
-});
+//   const adapterSelectors = createSelector(selectUsersResult, (result) =>
+//     usersAdapter.getSelectors(() => result?.data ?? initialState)
+//   )
 
-export const {
-  selectAll: selectAllLeaves,
-  selectById: selectLeaveById,
-  selectIds: selectLeaveIds,
-} = leavesAdapter.getSelectors(
-  (state) => selectLeavesData(state) ?? initialState
-);
+//   return {
+//     selectAll: createSelector(adapterSelectors, (s) => s.selectAll(undefined)),
+//     selectEntities: createSelector(adapterSelectors, (s) =>
+//       s.selectEntities(undefined)
+//     ),
+//     selectIds: createSelector(adapterSelectors, (s) => s.selectIds(undefined)),
+//     selectTotal: createSelector(adapterSelectors, (s) =>
+//       s.selectTotal(undefined)
+//     ),
+//     selectById: (id) =>
+//       createSelector(adapterSelectors, (s) => s.selectById(s, id)),
+//   }
+// }

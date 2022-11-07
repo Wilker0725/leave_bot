@@ -1,7 +1,9 @@
 import { useAppDispatch } from "@/app/store";
-import CustomizedTables from "@/components/Tables/CustomizedTable";
+// import CustomizedTables from "@/components/Tables/CustomizedTable";
+import CustomLeaveTable from "@/components/Tables/CustomLeaveTable";
 import User from "@/features/users/User";
 import { useGetUsersQuery } from "@/features/users/usersApiSlice";
+import { useGetLeavesQuery } from "@/features/leaves/leavesApiSlice";
 import { useEffect } from "react";
 import {
   selectUserQuery,
@@ -12,6 +14,7 @@ import {
   selectUserLimit,
   setUserPageLimit,
 } from "@/features/users/userSlice";
+import { setLeavesPageQuery } from "@/features/leaves/leavesSlice";
 import { useSelector } from "react-redux";
 import useSessionStorage from "@/hooks/useSessionStorage";
 
@@ -22,13 +25,13 @@ const LeavesList = () => {
   const page = useSelector(selectUserPage);
   const limit = useSelector(selectUserLimit);
 
-  const [_, setSessionStorageUserQuery] = useSessionStorage(
-    "user-query",
+  const [_, setSessionStorageLeavesQuery] = useSessionStorage(
+    "leaves-query",
     pageSearchQuery
   );
 
   const {
-    data: users,
+    data: leaves,
     isLoading,
     isSuccess,
     isError,
@@ -39,8 +42,8 @@ const LeavesList = () => {
 
     dispatch(setUserPageQuery(queryString));
 
-    setSessionStorageUserQuery(queryString);
-  }, [page, limit, dispatch, pageSearch, setSessionStorageUserQuery]);
+    setSessionStorageLeavesQuery(queryString);
+  }, [page, limit, dispatch, pageSearch, setSessionStorageLeavesQuery]);
 
   let content = null;
 
@@ -48,7 +51,7 @@ const LeavesList = () => {
   if (isError) content = <p>Error</p>;
 
   if (isSuccess) {
-    let { ids, entities } = users;
+    let { ids, entities } = leaves;
 
     /**
         Walk around from apiSlice to pass pageInfo 
@@ -58,7 +61,7 @@ const LeavesList = () => {
     const pageInfo = entities["pageInfo"];
 
     content = (
-      <CustomizedTables
+      <CustomLeaveTable
         minWidth={600}
         headers={[
           "Associate Name",
@@ -85,7 +88,7 @@ const LeavesList = () => {
               return <User key={entities[id].id} user={entities[id]} />;
             })
           : null}
-      </CustomizedTables>
+      </CustomLeaveTable>
     );
 
     return content;

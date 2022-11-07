@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const LEAVE_QUERY = `page=1&limit=10`;
+const LEAVES_QUERY = `page=1&limit=10`;
 
 let initialState = {
   query:
     typeof window === "undefined"
-      ? LEAVE_QUERY
-      : JSON.parse(window.sessionStorage.getItem("leave-query")),
+      ? LEAVES_QUERY
+      : JSON.parse(window.sessionStorage.getItem("leaves-query")),
 };
 
 if (initialState.query === null) {
@@ -14,7 +14,7 @@ if (initialState.query === null) {
 }
 
 const leaveReducer = createSlice({
-  name: "leave",
+  name: "leaves",
   initialState: {
     ...initialState,
     page: 0,
@@ -22,19 +22,19 @@ const leaveReducer = createSlice({
     search: "",
   },
   reducers: {
-    setUserPageQuery: (state, action) => {
+    setleavesPageQuery: (state, action) => {
       const query = action.payload;
       state.query = query;
     },
-    setUserPage: (state, action) => {
+    setLeavesPage: (state, action) => {
       state.page = action.payload;
     },
-    setUserPageLimit: (state, action) => {
+    setLeavesPageLimit: (state, action) => {
       console.log("action.payload limit: ", action.payload);
 
       state.limit = action.payload;
     },
-    setUserSearch: (state, action) => {
+    setLeavesSearch: (state, action) => {
       state.search = action.payload;
     },
     resetQuery: (state, action) => {
@@ -46,16 +46,16 @@ const leaveReducer = createSlice({
 });
 
 export const {
-  setUserPageQuery,
-  setUserSearch,
+  setLeavesPageQuery,
+  setLeavesSearch,
   resetQuery,
-  setUserPage,
-  setUserPageLimit,
+  setLeavesPage,
+  setLeavesPageLimit,
 } = leaveReducer.actions;
 
 export default leaveReducer.reducer;
 
-export const selectUserQuery = (state) => state.user.query;
-export const selectUserSearch = (state) => state.user.search;
-export const selectUserPage = (state) => state.user.page;
-export const selectUserLimit = (state) => state.user.limit;
+export const selectLeavesQuery = (state) => state.leaves.query;
+export const selectLeavesSearch = (state) => state.leaves.search;
+export const selectLeavesPage = (state) => state.leaves.page;
+export const selectLeavesLimit = (state) => state.leaves.limit;
