@@ -26,7 +26,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
         const loadedUsers = responseData?.users.map((user) => user)
 
-        // walk around to pass page details
         loadedUsers.push({
           id: "pageInfo",
           currentPage,

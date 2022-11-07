@@ -13,7 +13,7 @@ export const queryToObject = (args: string) => {
 
 export const objectToQuery = (args) => {
   /**
-    sort_by is a query string eg:sort_by=team_name&direction=desc 
+    sort_by is a query string eg:&sort_by=team_name&direction=desc 
     instead of sort_by: "team_name", direction: "desc"
   */
   const { sort_by, ...rest} = args;

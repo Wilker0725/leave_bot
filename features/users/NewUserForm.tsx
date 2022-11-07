@@ -16,7 +16,7 @@ const NewUserForm = () => {
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
     useAddNewUserMutation(undefined);
 
-  const [newUser, setNewUser] = useState<TypeUser | any>({});
+  const [newUser, setNewUser] = useState<Partial<TypeUser>>();
   const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {

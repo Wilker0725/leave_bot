@@ -39,7 +39,7 @@ const SearchUser = ({ onChangeText, onSubmit, formData }) => {
         <TextField
           fullWidth
           id="team_name"
-          name="cognizant_user_id"
+          name="team_name"
           label="Team Name"
           variant="outlined"
           onChange={onChangeText}
@@ -64,32 +64,32 @@ const SearchUser = ({ onChangeText, onSubmit, formData }) => {
               {
                 id: 1,
                 label: "Alphabetically, A-Z - Team Name",
-                value: "sort_by=team_name&direction=asc",
+                value: "&sort_by=team_name&direction=asc",
               },
               {
                 id: 2,
                 label: "Alphabetically, Z-A - Team Name",
-                value: "sort_by=team_name&direction=desc",
+                value: "&sort_by=team_name&direction=desc",
               },
               {
                 id: 3,
                 label: "Alphabetically, A-Z - Cognizant Username",
-                value: "sort_by=cognizant_username&direction=asc",
+                value: "&sort_by=cognizant_username&direction=asc",
               },
               {
                 id: 3,
                 label: "Alphabetically, Z-A - Cognizant Username",
-                value: "sort_by=cognizant_username&direction=desc",
+                value: "&sort_by=cognizant_username&direction=desc",
               },
               {
                 id: 5,
                 label: "Date, new to old",
-                value: "sort_by=created_at&direction=desc",
+                value: "&sort_by=created_at&direction=desc",
               },
               {
                 id: 6,
                 label: "Date, old to new",
-                value: "sort_by=created_at&direction=asc",
+                value: "&sort_by=created_at&direction=asc",
               },
             ].map((item) => (
               <MenuItem key={item.value} value={item.value}>

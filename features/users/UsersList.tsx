@@ -1,8 +1,8 @@
-import { useAppDispatch } from "@/app/store"
-import CustomizedTables from "@/components/Tables/CustomizedTable"
-import User from "@/features/users/User"
-import { useGetUsersQuery } from "@/features/users/usersApiSlice"
-import { useEffect } from "react"
+import { useAppDispatch } from "@/app/store";
+import CustomizedTables from "@/components/Tables/CustomizedTable";
+import User from "@/features/users/User";
+import { useGetUsersQuery } from "@/features/users/usersApiSlice";
+import { useEffect } from "react";
 import {
   selectUserQuery,
   setUserPageQuery,
@@ -11,79 +11,74 @@ import {
   setUserPage,
   selectUserLimit,
   setUserPageLimit,
-} from "@/features/users/userSlice"
-import { useSelector } from "react-redux"
-import useSessionStorage from "@/hooks/useSessionStorage"
+} from "@/features/users/userSlice";
+import { useSelector } from "react-redux";
+import useSessionStorage from "@/hooks/useSessionStorage";
 
 const UsersList = () => {
-  const dispatch = useAppDispatch()
-  const pageSearchQuery = useSelector(selectUserQuery)
-  const pageSearch = useSelector(selectUserSearch)
-  const page = useSelector(selectUserPage)
-  const limit = useSelector(selectUserLimit)
+  const dispatch = useAppDispatch();
+  const pageSearchQuery = useSelector(selectUserQuery);
+  const pageSearch = useSelector(selectUserSearch);
+  const page = useSelector(selectUserPage);
+  const limit = useSelector(selectUserLimit);
 
   const [_, setSessionStorageUserQuery] = useSessionStorage(
     "user-query",
     pageSearchQuery
-  )
+  );
 
   const {
     data: users,
     isLoading,
     isSuccess,
     isError,
-  } = useGetUsersQuery(pageSearchQuery)
+  } = useGetUsersQuery(pageSearchQuery);
 
   useEffect(() => {
-    const queryString = `page=${page + 1}&limit=${limit}&${pageSearch}`
+    const queryString = `page=${page + 1}&limit=${limit}&${pageSearch}`;
 
-    dispatch(setUserPageQuery(queryString))
+    dispatch(setUserPageQuery(queryString));
 
-    setSessionStorageUserQuery(queryString)
-  }, [page, limit, dispatch, pageSearch, setSessionStorageUserQuery])
+    setSessionStorageUserQuery(queryString);
+  }, [page, limit, dispatch, pageSearch, setSessionStorageUserQuery]);
 
-  let content = null
+  let content = null;
 
-  if (isLoading) content = <p>Loading...</p>
-  if (isError) content = <p>Error</p>
+  if (isLoading) content = <p>Loading...</p>;
+  if (isError) content = <p>Error</p>;
 
   if (isSuccess) {
-    let { ids, entities } = users
+    let { ids, entities } = users;
 
-    /**
-        Walk around from apiSlice to pass pageInfo 
-        Need to remove from here 
-        - to remove the last item
-     */
-    const pageInfo = entities["pageInfo"]
+    const pageInfo = entities["pageInfo"];
 
     content = (
       <CustomizedTables
         minWidth={600}
         headers={["Name", "Cognizant Id", "Role", "Team Name"]}
         setPage={(value) => {
-          dispatch(setUserPage(value))
+          dispatch(setUserPage(value));
         }}
         page={page}
         rowsPerPage={limit}
         setRowsPerPage={(value) => {
-          dispatch(setUserPageLimit(value))
+          dispatch(setUserPageLimit(value));
         }}
         totalPage={pageInfo.recordCount}
       >
         {ids?.length
           ? ids.map((id: string) => {
-              if (id === "pageInfo") return null
+              if (id === "pageInfo") return null;
 
-              return <User key={entities[id].id} user={entities[id]} />
+              return <User key={entities[id].id} user={entities[id]} />;
             })
           : null}
       </CustomizedTables>
-    )
+    );
 
-    return content
+    return content;
   }
-  return content
-}
+  return content;
+};
 
-export default UsersList
+export default UsersList;
