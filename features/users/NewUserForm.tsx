@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { TypeUser } from "@/features/users/types";
+import { User } from "@/features/users/types";
 import {
   FormControl,
   FormHelperText,
@@ -26,7 +26,7 @@ const NewUserForm = () => {
   const [addNewUser, { isLoading, isSuccess, isError, error }]: any =
     useAddNewUserMutation(undefined);
 
-  const [newUser, setNewUser] = useState<Partial<TypeUser>>();
+  const [newUser, setNewUser] = useState<Partial<User>>();
   const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {

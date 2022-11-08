@@ -20,13 +20,13 @@ import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SearchUser from "@/features/users/SearchUser";
 import { useSelector } from "react-redux";
-import { typeUserFormData } from "@/features/users/types";
+import { UserSearchFormData } from "@/features/users/types";
 
 const User = () => {
   const dispatch = useAppDispatch();
   const isSearch = useSelector(selectUserIsSearch);
 
-  const [formData, setFormData] = useState<Partial<typeUserFormData>>({});
+  const [formData, setFormData] = useState<Partial<UserSearchFormData>>();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   const handleSearchInput = (

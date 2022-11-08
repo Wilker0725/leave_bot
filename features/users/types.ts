@@ -1,4 +1,4 @@
-export type TypeUser = {
+export type User = {
   id: number
   title: string
   reading_username: boolean
@@ -22,7 +22,7 @@ export type TypeUser = {
   account_name: string
 }
 
-export type typeUserFormData = {
+export type UserSearchFormData = {
   cognizant_username: string
   cognizant_user_id: string
   team_name: string
