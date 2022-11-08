@@ -6,14 +6,20 @@ const Footer = () => {
     <Box mt={"auto"}>
       <Box
         sx={{
-          backgroundColor: "#1976d2",
+          backgroundColor: "#323232",
           p: 2,
-          color: "#fff",
-          fontSize: "14px",
+          color: "#b7b7b7",
+          fontSize: "12px",
           mt: 4,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontStyle: "normal",
+          fontFamily: "Lato,sans-serif",
         }}
       >
-        Government Technology Agency (GovTech)
+        <Box pr={1}>© 2022 Cognizant</Box>
+        <Box pl={1}>Government Technology Agency (GovTech)</Box>
       </Box>
     </Box>
   );

@@ -44,7 +44,7 @@ const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
           id="cognizant_username"
           fullWidth
           name="cognizant_username"
-          label="User Name"
+          label="Name"
           variant="outlined"
           onChange={onChangeText}
           autoFocus={true}
@@ -56,7 +56,7 @@ const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
           id="cognizant_user_id"
           fullWidth
           name="cognizant_user_id"
-          label="User Id"
+          label="Employee Id"
           variant="outlined"
           onChange={onChangeText}
         />
