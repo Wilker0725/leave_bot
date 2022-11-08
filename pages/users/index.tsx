@@ -26,7 +26,7 @@ const User = () => {
   const dispatch = useAppDispatch();
   const isSearch = useSelector(selectUserIsSearch);
 
-  const [formData, setFormData] = useState<Partial<typeUserFormData>>();
+  const [formData, setFormData] = useState<Partial<typeUserFormData>>({});
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   const handleSearchInput = (

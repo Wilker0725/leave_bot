@@ -1,12 +1,13 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import AppBar from "@mui/material/AppBar"
-import Box from "@mui/material/Box"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
-import Button from "@mui/material/Button"
-import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload"
-import LogoutIcon from "@mui/icons-material/Logout"
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
+import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Header = () => {
   return (
@@ -20,8 +21,8 @@ const Header = () => {
                 variant="h6"
                 component="div"
               >
-                <AssuredWorkloadIcon />
-                <Box ml={1}>Dashboard</Box>
+                <GridViewOutlinedIcon />
+                <Box ml={1}>LEAVEBOT ADMIN UI</Box>
               </Typography>
             </Link>
           </Box>
@@ -30,7 +31,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
     </Box>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

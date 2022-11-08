@@ -61,7 +61,7 @@ const UsersList = () => {
     content = (
       <CustomizedTables
         minWidth={600}
-        headers={["Name", "Cognizant Id", "Role", "Team Name"]}
+        headers={["Name", "Employee Id", "Role", "Team Name"]}
         setPage={(value) => {
           dispatch(setUserPage(value));
         }}
