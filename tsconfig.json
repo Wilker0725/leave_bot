@@ -8,8 +8,7 @@
       "@/styles/*": ["styles/*"],
       "@/features/*": ["features/*"],
       "@/utils/*": ["utils/*"],
-      "@/config/*": ["config/*"],
-      "@/tmp/*": ["tmp/*"],
+      "@/enums/*": ["enums/*"],
       "@/hooks/*": ["hooks/*"],
       "@/backend/*": ["backend/*"]
     },

@@ -18,7 +18,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import Toast from "@/components/Toast";
-import { ROLES } from "@/config/roles";
+import { ROLES } from "@/enums/roles";
 
 const NewUserForm = () => {
   const router = useRouter();
