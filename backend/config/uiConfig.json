@@ -1,10 +1,12 @@
 {
-  "users": {
-    "search_field": ["team_name", "cognizant_username", "cognizant_user_id"],
-    "sort_field": ["team_name", "created_at", "cognizant_username"]
-  },
-  "leaves": {
-    "search_field": ["team_name", "start_date", "end_date"],
-    "sort_field": ["team_name", "created_at"]
+  "projects": {
+    "search_field": [
+      "project_name",
+      "emp_id",
+      "emp_name",
+      "so_number",
+      "po_number"
+    ],
+    "sort_field": ["project_name", "emp_name", "created_at"]
   }
 }
