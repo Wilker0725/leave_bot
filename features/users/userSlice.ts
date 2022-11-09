@@ -1,5 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+type UserSliceState = {
+  page: number
+  limit: number
+  search: string
+  isSearch: boolean
+  query: string
+}
+
 const USER_QUERY = `page=1&limit=10`
 
 let initialState = {
@@ -21,11 +29,11 @@ const userReducer = createSlice({
     limit: 10,
     search: "",
     isSearch: false,
-  },
+  } as UserSliceState,
   reducers: {
     setUserPageQuery: (state, action) => {
       const query = action.payload
-      state.query = query
+      state.query = query 
     },
     setUserPage: (state, action) => {
       state.page = action.payload

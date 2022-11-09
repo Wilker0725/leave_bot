@@ -12,19 +12,19 @@ import {
 import { Box } from "@mui/system";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import React, { useEffect, useRef } from "react";
-import { typeUserFormData } from "./types";
+import { UserSearchFormData } from "./types";
 
-type typeSearchUser = {
+type SearchUserProp = {
   onChangeText: (
     event:
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       | SelectChangeEvent
   ) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  formData: Partial<typeUserFormData>;
+  formData: Partial<UserSearchFormData>;
 };
 
-const SearchUser = ({ onChangeText, onSubmit, formData }: typeSearchUser) => {
+const SearchUser = ({ onChangeText, onSubmit, formData }: SearchUserProp) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

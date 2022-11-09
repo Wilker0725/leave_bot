@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Confirmation from "@/components/Modals/Confirmation/Alert/Confirmation";
-import { TypeUser } from "@/features/users/types";
+import { User } from "@/features/users/types";
 import { selectUserQuery, setUserPageQuery } from "@/features/users/userSlice";
 import { useAppDispatch } from "@/app/store";
 import {
@@ -27,7 +27,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import Toast from "@/components/Toast";
-import { ROLES } from "@/config/roles";
+import { ROLES } from "@/enums/roles";
 
 const REQUIRED_FIELD = [
   "cognizant_username",
@@ -61,7 +61,7 @@ const EditUserForm = ({ id }) => {
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
   ] = useDeleteUserMutation();
 
-  const [editUser, setEditUser] = useState<Partial<TypeUser>>();
+  const [editUser, setEditUser] = useState<Partial<User>>();
   const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {

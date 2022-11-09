@@ -1,13 +1,14 @@
-import { FC } from "react"
-import ModeEditIcon from "@mui/icons-material/ModeEdit"
-import Link from "next/link"
+import { FC } from "react";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import Link from "next/link";
 import {
   StyledTableCell,
   StyledTableRow,
-} from "@/components/Tables/CustomizedTable"
-import { Box } from "@mui/material"
+} from "@/components/Tables/CustomizedTable";
+import { Box } from "@mui/material";
+import { User } from "./types";
 
-const User: FC<{ user: any }> = ({ user }) => {
+const User: FC<{ user: User }> = ({ user }) => {
   if (user) {
     return (
       <StyledTableRow>
@@ -25,7 +26,7 @@ const User: FC<{ user: any }> = ({ user }) => {
           </Box>
         </StyledTableCell>
       </StyledTableRow>
-    )
-  } else return null
-}
-export default User
+    );
+  } else return null;
+};
+export default User;

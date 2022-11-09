@@ -8,8 +8,7 @@
       "@/styles/*": ["styles/*"],
       "@/features/*": ["features/*"],
       "@/utils/*": ["utils/*"],
-      "@/config/*": ["config/*"],
-      "@/tmp/*": ["tmp/*"],
+      "@/enums/*": ["enums/*"],
       "@/hooks/*": ["hooks/*"],
       "@/backend/*": ["backend/*"]
     },
@@ -31,9 +30,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/api/apiSlice.ts",
     "pages/projects/[id].js",
-    "features/projects/projectsApiSlice.js",
     "features/users/usersApiSlice.js",
     "pages/api/users/index.js"
   ],
