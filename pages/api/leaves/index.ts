@@ -49,7 +49,7 @@ export default async function handler(
 
         const queryFilter = {
           where: {
-            user: {
+            users: {
               team_name: {
                 contains: removeQuotes(team_name),
               },
@@ -67,7 +67,7 @@ export default async function handler(
         const orderBy =
           currentSort === "team_name"
             ? {
-                user: {
+                users: {
                   [currentSort]: currentDirection,
                 },
               }
@@ -83,7 +83,7 @@ export default async function handler(
           orderBy: orderBy,
           ...queryFilter,
           include: {
-            leaves: true,
+            users: true,
           },
         });
 

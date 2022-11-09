@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/app/store";
 // import CustomizedTables from "@/components/Tables/CustomizedTable";
 import CustomLeaveTable from "@/components/Tables/CustomLeaveTable";
 import User from "@/features/users/User";
+import Leaves from "./leaves";
 import { useGetUsersQuery } from "@/features/users/usersApiSlice";
 import { useGetLeavesQuery } from "@/features/leaves/leavesApiSlice";
 import { useEffect } from "react";
@@ -35,7 +36,7 @@ const LeavesList = () => {
     isLoading,
     isSuccess,
     isError,
-  } = useGetUsersQuery(pageSearchQuery);
+  } = useGetLeavesQuery(pageSearchQuery);
 
   useEffect(() => {
     const queryString = `page=${page + 1}&limit=${limit}&${pageSearch}`;
@@ -85,7 +86,8 @@ const LeavesList = () => {
           ? ids.map((id: string) => {
               if (id === "pageInfo") return null;
 
-              return <User key={entities[id].id} user={entities[id]} />;
+              // return <User key={entities[id].id} user={entities[id]} />;
+              return <Leaves key={entities[id].id} leave={entities[id]} />;
             })
           : null}
       </CustomLeaveTable>

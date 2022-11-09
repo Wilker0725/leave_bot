@@ -10,10 +10,10 @@ let initialState = {
 };
 
 if (initialState.query === null) {
-  initialState.query = LEAVE_QUERY;
+  initialState.query = LEAVES_QUERY;
 }
 
-const leaveReducer = createSlice({
+const leavesReducer = createSlice({
   name: "leaves",
   initialState: {
     ...initialState,
@@ -51,9 +51,9 @@ export const {
   resetQuery,
   setLeavesPage,
   setLeavesPageLimit,
-} = leaveReducer.actions;
+} = leavesReducer.actions;
 
-export default leaveReducer.reducer;
+export default leavesReducer.reducer;
 
 export const selectLeavesQuery = (state) => state.leaves.query;
 export const selectLeavesSearch = (state) => state.leaves.search;

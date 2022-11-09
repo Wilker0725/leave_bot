@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs";
 
-export type TypeLeaves = {
+export type TypeLeave = {
   id: number;
   user_id: number;
   leave_type: string;
@@ -36,4 +36,10 @@ export type TypeLeaves = {
     service_line_id: null;
     is_active: false;
   };
+};
+
+export type typeLeaveFormData = {
+  team_name: string;
+  start_date: Date;
+  end_date: Date;
 };
