@@ -3,6 +3,7 @@ import Link from "next/link";
 import RecipeReviewCard from "@/components/RecipeReviewCard";
 import GroupIcon from "@mui/icons-material/Group";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const Welcome = () => {
   const date = new Date();
@@ -19,6 +20,13 @@ const Welcome = () => {
           <Link href="/users" passHref>
             <RecipeReviewCard message={"View Users"}>
               <GroupIcon fontSize="large" />
+            </RecipeReviewCard>
+          </Link>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Link href="/projects" passHref>
+            <RecipeReviewCard message={"View Projects"}>
+              <BookmarkIcon fontSize="large" />
             </RecipeReviewCard>
           </Link>
         </Grid>
