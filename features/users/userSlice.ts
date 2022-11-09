@@ -67,8 +67,8 @@ export const {
 
 export default userReducer.reducer
 
-export const selectUserQuery = (state) => state.user.query
-export const selectUserSearch = (state) => state.user.search
-export const selectUserPage = (state) => state.user.page
-export const selectUserLimit = (state) => state.user.limit
-export const selectUserIsSearch = (state) => state.user.isSearch
+export const selectUserQuery = (state: { user: Pick<UserSliceState, "query">}) => state.user.query
+export const selectUserSearch = (state: { user: Pick<UserSliceState, "search">}) => state.user.search
+export const selectUserPage = (state: { user: Pick<UserSliceState, "page">}) => state.user.page
+export const selectUserLimit = (state: { user: Pick<UserSliceState, "limit">}) => state.user.limit
+export const selectUserIsSearch = (state: { user: Pick<UserSliceState, "isSearch">}) => state.user.isSearch
