@@ -78,7 +78,7 @@ export async function handler(
             [currentSort]: currentDirection,
           },
         ];
-
+          
         const resources = await prisma.projects.findMany({
           skip: (currentPage - 1) * currentLimit,
           take: currentLimit * 1,
@@ -109,10 +109,10 @@ export async function handler(
       break;
     case "POST":
       try {
+        console.log("000000 check me 0000000");
         const today = new Date();
         const formattedDate = today.toISOString();
         const { emp_id } = body;
-
         const resourceExist = await prisma.projects.findFirst({
           where: {
             emp_id: emp_id,
@@ -123,7 +123,7 @@ export async function handler(
         if (resourceExist) {
           return res.status(409).json({ error: "User record already exist." });
         }
-
+        console.log("0000");
         const resource = await prisma.projects.create({
           data: {
             ...body,
@@ -131,7 +131,7 @@ export async function handler(
             updated_at: formattedDate,
           },
         });
-
+        console.log("0000 --- ", resource);
         res.status(201).json({ resource: resource });
       } catch (error) {
         console.log(error);

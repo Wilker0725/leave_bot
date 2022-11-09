@@ -45,9 +45,9 @@ const SearchProject = ({
     <Search onSubmit={onSubmit}>
       <Grid item xs={6} md={3}>
         <TextField
-          id="projectName"
+          id="project_name"
           fullWidth
-          name="projectName"
+          name="project_name"
           label="Project Name"
           variant="outlined"
           onChange={onChangeText}
@@ -57,9 +57,9 @@ const SearchProject = ({
       </Grid>
       <Grid item xs={6} md={3}>
         <TextField
-          id="empId"
+          id="emp_id"
           fullWidth
-          name="empId"
+          name="emp_id"
           label="Employee Id"
           variant="outlined"
           onChange={onChangeText}
@@ -68,8 +68,8 @@ const SearchProject = ({
       <Grid item xs={6} md={3}>
         <TextField
           fullWidth
-          id="purchaseOrderNumber"
-          name="purchaseOrderNumber"
+          id="po_number"
+          name="po_number"
           label="Purchase Order Number"
           variant="outlined"
           onChange={onChangeText}
@@ -94,12 +94,12 @@ const SearchProject = ({
               {
                 id: 1,
                 label: "Alphabetically, A-Z - Project Name",
-                value: "&sort_by=projectName&direction=asc",
+                value: "&sort_by=project_name&direction=asc",
               },
               {
                 id: 2,
                 label: "Alphabetically, Z-A - Project Name",
-                value: "&sort_by=projectName&direction=desc",
+                value: "&sort_by=project_name&direction=desc",
               },
               {
                 id: 3,

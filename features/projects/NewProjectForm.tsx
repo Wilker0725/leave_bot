@@ -98,22 +98,22 @@ const NewProjectForm = () => {
           <TextField
             inputRef={inputRef}
             required={true}
-            id="projectName"
-            name="projectName"
+            id="project_name"
+            name="project_name"
             label="Project Name"
             placeholder="Project Name"
-            value={newProject?.projectName || ""}
+            value={newProject?.project_name || ""}
             onChange={handleOnChangeText}
             {...(newProject &&
-              dirtyFields["projectName"] && {
-                error: newProject.projectName.trim() === "",
+              dirtyFields["project_name"] && {
+                error: newProject.project_name.trim() === "",
                 helperText:
-                  newProject.projectName.trim() === "" ? "Empty field" : "",
+                  newProject.project_name.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["projectName"] && {
+              error.data.error["project_name"] && {
                 error: true,
-                helperText: error.data.error["projectName"],
+                helperText: error.data.error["project_name"],
               })}
           />
         </FormGroup>
@@ -122,22 +122,22 @@ const NewProjectForm = () => {
         <FormGroup>
           <TextField
             required={true}
-            id="empName"
-            name="empName"
-            label="empName"
-            placeholder="empName"
-            value={newProject?.empName || ""}
+            id="emp_name"
+            name="emp_name"
+            label="Employee Name"
+            placeholder="Employee Name"
+            value={newProject?.emp_name || ""}
             onChange={handleOnChangeText}
             {...(newProject &&
-              dirtyFields["empName"] && {
-                error: newProject.empName.trim() === "",
+              dirtyFields["emp_name"] && {
+                error: newProject.emp_name.trim() === "",
                 helperText:
-                  newProject.empName.trim() === "" ? "Empty field" : "",
+                  newProject.emp_name.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["empName"] && {
+              error.data.error["emp_name"] && {
                 error: true,
-                helperText: error.data.error["empName"],
+                helperText: error.data.error["emp_name"],
               })}
           />
         </FormGroup>
@@ -146,21 +146,22 @@ const NewProjectForm = () => {
         <FormGroup>
           <TextField
             required={true}
-            id="empId"
-            name="empId"
+            id="emp_id"
+            name="emp_id"
             label="Employee Id"
             placeholder="Employee Id"
-            value={newProject?.empId || ""}
+            value={newProject?.emp_id || ""}
             onChange={handleOnChangeText}
             {...(newProject &&
-              dirtyFields["empId"] && {
-                error: newProject.empId.trim() === "",
-                helperText: newProject.empId.trim() === "" ? "Empty field" : "",
+              dirtyFields["emp_id"] && {
+                error: newProject.emp_id.trim() === "",
+                helperText:
+                  newProject.emp_id.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["empId"] && {
+              error.data.error["emp_id"] && {
                 error: true,
-                helperText: error.data.error["empId"],
+                helperText: error.data.error["emp_id"],
               })}
           />
         </FormGroup>
@@ -169,24 +170,22 @@ const NewProjectForm = () => {
         <FormGroup>
           <TextField
             required={true}
-            id="purchaseOrderNumber"
-            name="purchaseOrderNumber"
+            id="po_number"
+            name="po_number"
             label="Purchase Order Number"
             placeholder="Purchase Order Number"
-            value={newProject?.purchaseOrderNumber || ""}
+            value={newProject?.po_number || ""}
             onChange={handleOnChangeText}
             {...(newProject &&
-              dirtyFields["purchaseOrderNumber"] && {
-                error: newProject.purchaseOrderNumber.trim() === "",
+              dirtyFields["po_number"] && {
+                error: newProject.po_number.trim() === "",
                 helperText:
-                  newProject.purchaseOrderNumber.trim() === ""
-                    ? "Empty field"
-                    : "",
+                  newProject.po_number.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["purchaseOrderNumber"] && {
+              error.data.error["po_number"] && {
                 error: true,
-                helperText: error.data.error["purchaseOrderNumber"],
+                helperText: error.data.error["po_number"],
               })}
           />
         </FormGroup>
@@ -195,19 +194,17 @@ const NewProjectForm = () => {
         <FormGroup>
           <TextField
             required={true}
-            id="salesOrderNumber"
-            name="salesOrderNumber"
+            id="so_number"
+            name="so_number"
             label="Sales Order Number"
             placeholder="Sales Order Number"
-            value={newProject?.salesOrderNumber || ""}
+            value={newProject?.so_number || ""}
             onChange={handleOnChangeText}
             {...(newProject &&
-              dirtyFields["salesOrderNumber"] && {
-                error: newProject.salesOrderNumber.trim() === "",
+              dirtyFields["so_number"] && {
+                error: newProject.so_number.trim() === "",
                 helperText:
-                  newProject.salesOrderNumber.trim() === ""
-                    ? "Empty field"
-                    : "",
+                  newProject.so_number.trim() === "" ? "Empty field" : "",
               })}
           />
         </FormGroup>
@@ -218,8 +215,8 @@ const NewProjectForm = () => {
             <DesktopDatePicker
               label="Start Date"
               inputFormat="MM/DD/YYYY"
-              value={newProject?.startDate ? newProject.startDate : null}
-              onChange={(value) => handleInChangeDate(value, "startDate")}
+              value={newProject?.start_date ? newProject.start_date : null}
+              onChange={(value) => handleInChangeDate(value, "start_date")}
               renderInput={(params) => <TextField {...params} fullWidth />}
             />
           </Grid>
@@ -227,8 +224,8 @@ const NewProjectForm = () => {
             <DesktopDatePicker
               label="End Date"
               inputFormat="MM/DD/YYYY"
-              value={newProject?.endDate ? newProject.endDate : null}
-              onChange={(value) => handleInChangeDate(value, "endDate")}
+              value={newProject?.end_date ? newProject.end_date : null}
+              onChange={(value) => handleInChangeDate(value, "end_date")}
               renderInput={(params) => <TextField {...params} fullWidth />}
             />
           </Grid>

@@ -29,13 +29,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
 
 const REQUIRED_FIELD = [
-  "projectName",
-  "empName",
-  "empId",
-  "purchaseOrderNumber",
-  "salesOrderNumber",
-  "startDate",
-  "endDate",
+  "project_name",
+  "emp_name",
+  "emp_id",
+  "po_number",
+  "so_number",
+  "start_date",
+  "end_date",
 ];
 
 const EditProjectForm = ({ id }) => {
@@ -70,23 +70,23 @@ const EditProjectForm = ({ id }) => {
     if (project === undefined) return;
 
     const {
-      projectName,
-      empName,
-      empId,
-      purchaseOrderNumber,
-      salesOrderNumber,
-      startDate,
-      endDate,
+      project_name,
+      emp_name,
+      emp_id,
+      po_number,
+      so_number,
+      start_date,
+      end_date,
     } = project;
 
     setEditProject({
-      projectName,
-      empName,
-      empId,
-      purchaseOrderNumber,
-      salesOrderNumber,
-      startDate,
-      endDate,
+      project_name,
+      emp_name,
+      emp_id,
+      po_number,
+      so_number,
+      start_date,
+      end_date,
     });
   }, [project]);
 
@@ -168,7 +168,8 @@ const EditProjectForm = ({ id }) => {
       Object.entries(editProject)
         .filter(([key]) => REQUIRED_FIELD.includes(key))
         .every((item: any) => {
-          if (item[1] === null || item[1] === "") return false;
+          if (item[1] === null || item[1] === "" || item[1] === undefined)
+            return false;
 
           const hasValue = item[1].trim().length > 0;
 
@@ -188,7 +189,7 @@ const EditProjectForm = ({ id }) => {
       <Grid item xs={12}>
         <Box display={"flex"} justifyContent="space-between">
           <Typography variant="h5" component="h5" gutterBottom>
-            {project.projectName}
+            {project.project_name}
           </Typography>
           <Box display={"flex"}>
             <IconButton
@@ -204,7 +205,7 @@ const EditProjectForm = ({ id }) => {
             </IconButton>
             <Confirmation
               onClickYes={onDeleteProject}
-              text={`Are you sure want to remove ${editProject?.projectName}?`}
+              text={`Are you sure want to remove ${editProject?.project_name}?`}
             >
               <IconButton color="info">
                 <DeleteIcon fontSize="large" className="cursor" />
@@ -217,23 +218,23 @@ const EditProjectForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="projectName"
-            name="projectName"
+            id="project_name"
+            name="project_name"
             label="Project Name"
             placeholder="Project Name"
-            value={editProject?.projectName || ""}
+            value={editProject?.project_name || ""}
             onChange={handleOnChangeText}
             {...(editProject &&
-              dirtyFields["projectName"] &&
-              editProject["projectName"].length === 0 && {
-                error: editProject.projectName.trim() === "",
+              dirtyFields["project_name"] &&
+              editProject["project_name"].length === 0 && {
+                error: editProject.project_name.trim() === "",
                 helperText:
-                  editProject.projectName.trim() === "" ? "Empty field" : "",
+                  editProject.project_name.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["projectName"] && {
+              error.data.error["project_name"] && {
                 error: true,
-                helperText: error.data.error["projectName"],
+                helperText: error.data.error["project_name"],
               })}
           />
         </FormGroup>
@@ -242,23 +243,23 @@ const EditProjectForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="empName"
-            name="empName"
+            id="emp_name"
+            name="emp_name"
             label="Employee Name"
             placeholder="Employee Name"
-            value={editProject?.empName || ""}
+            value={editProject?.emp_name || ""}
             onChange={handleOnChangeText}
             {...(editProject &&
-              dirtyFields["empName"] &&
-              editProject["empName"].length === 0 && {
-                error: editProject.empName.trim() === "",
+              dirtyFields["emp_name"] &&
+              editProject["emp_name"].length === 0 && {
+                error: editProject.emp_name.trim() === "",
                 helperText:
-                  editProject.empName.trim() === "" ? "Empty field" : "",
+                  editProject.emp_name.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["empName"] && {
+              error.data.error["emp_name"] && {
                 error: true,
-                helperText: error.data.error["empName"],
+                helperText: error.data.error["emp_name"],
               })}
           />
         </FormGroup>
@@ -267,18 +268,18 @@ const EditProjectForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="empId"
-            name="empId"
+            id="emp_id"
+            name="emp_id"
             label="Employee Id"
             placeholder="Employee Id"
-            value={editProject?.empId || ""}
+            value={editProject?.emp_id || ""}
             onChange={handleOnChangeText}
             {...(editProject &&
-              dirtyFields["empId"] &&
-              editProject["empId"].length === 0 && {
-                error: editProject.empId.trim() === "",
+              dirtyFields["emp_id"] &&
+              editProject["emp_id"].length === 0 && {
+                error: editProject.emp_id.trim() === "",
                 helperText:
-                  editProject.empId.trim() === "" ? "Empty field" : "",
+                  editProject.emp_id.trim() === "" ? "Empty field" : "",
               })}
           />
         </FormGroup>
@@ -287,25 +288,23 @@ const EditProjectForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="purchaseOrderNumber"
-            name="purchaseOrderNumber"
+            id="po_number"
+            name="po_number"
             label="Purchase Order Number"
             placeholder="Purchase Order Number"
-            value={editProject?.purchaseOrderNumber || ""}
+            value={editProject?.po_number || ""}
             onChange={handleOnChangeText}
             {...(editProject &&
-              dirtyFields["purchaseOrderNumber"] &&
-              editProject["purchaseOrderNumber"].length === 0 && {
-                error: editProject.purchaseOrderNumber.trim() === "",
+              dirtyFields["po_number"] &&
+              editProject["po_number"].length === 0 && {
+                error: editProject.po_number.trim() === "",
                 helperText:
-                  editProject.purchaseOrderNumber.trim() === ""
-                    ? "Empty field"
-                    : "",
+                  editProject.po_number.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["purchaseOrderNumber"] && {
+              error.data.error["po_number"] && {
                 error: true,
-                helperText: error.data.error["purchaseOrderNumber"],
+                helperText: error.data.error["po_number"],
               })}
           />
         </FormGroup>
@@ -314,25 +313,23 @@ const EditProjectForm = ({ id }) => {
         <FormGroup>
           <TextField
             required={true}
-            id="salesOrderNumber"
-            name="salesOrderNumber"
+            id="so_number"
+            name="so_number"
             label="Sales Order Number"
             placeholder="Sales Order Number"
-            value={editProject?.salesOrderNumber || ""}
+            value={editProject?.so_number || ""}
             onChange={handleOnChangeText}
             {...(editProject &&
-              dirtyFields["salesOrderNumber"] &&
-              editProject["salesOrderNumber"].length === 0 && {
-                error: editProject.salesOrderNumber.trim() === "",
+              dirtyFields["so_number"] &&
+              editProject["so_number"].length === 0 && {
+                error: editProject.so_number.trim() === "",
                 helperText:
-                  editProject.salesOrderNumber.trim() === ""
-                    ? "Empty field"
-                    : "",
+                  editProject.so_number.trim() === "" ? "Empty field" : "",
               })}
             {...(error &&
-              error.data.error["salesOrderNumber"] && {
+              error.data.error["so_number"] && {
                 error: true,
-                helperText: error.data.error["salesOrderNumber"],
+                helperText: error.data.error["so_number"],
               })}
           />
         </FormGroup>
@@ -343,8 +340,8 @@ const EditProjectForm = ({ id }) => {
             <DesktopDatePicker
               label="Start Date"
               inputFormat="MM/DD/YYYY"
-              value={editProject?.startDate ? editProject.startDate : null}
-              onChange={(value) => handleInChangeDate(value, "startDate")}
+              value={editProject?.start_date ? editProject.start_date : null}
+              onChange={(value) => handleInChangeDate(value, "start_date")}
               renderInput={(params) => <TextField {...params} fullWidth />}
             />
           </Grid>
@@ -352,8 +349,8 @@ const EditProjectForm = ({ id }) => {
             <DesktopDatePicker
               label="End Date"
               inputFormat="MM/DD/YYYY"
-              value={editProject?.endDate ? editProject.endDate : null}
-              onChange={(value) => handleInChangeDate(value, "endDate")}
+              value={editProject?.end_date ? editProject.end_date : null}
+              onChange={(value) => handleInChangeDate(value, "end_date")}
               renderInput={(params) => <TextField {...params} fullWidth />}
             />
           </Grid>

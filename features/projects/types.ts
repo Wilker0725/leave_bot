@@ -1,18 +1,18 @@
 export type Project = {
   id: number
-  projectName: string
-  empName: string
-  empId: string
-  purchaseOrderNumber: string
-  salesOrderNumber: string
-  startDate: Date
-  endDate: Date
+  project_name: string
+  emp_name: string
+  emp_id: string
+  po_number: string
+  so_number: string
+  start_date: Date
+  end_date: Date
 }
 
 export type ProjectSearchFormData = {
-  projectName: string
-  empName: string
-  empId: string
+  project_name: string
+  emp_name: string
+  emp_id: string
   sort_by: string
 }
 

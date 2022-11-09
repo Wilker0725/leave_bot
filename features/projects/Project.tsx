@@ -12,9 +12,9 @@ const Project: FC<{ project: Project }> = ({ project }) => {
   if (project) {
     return (
       <StyledTableRow>
-        <StyledTableCell>{project.projectName}</StyledTableCell>
-        <StyledTableCell>{project.empId}</StyledTableCell>
-        <StyledTableCell>{project.empName}</StyledTableCell>
+        <StyledTableCell>{project.project_name}</StyledTableCell>
+        <StyledTableCell>{project.emp_id}</StyledTableCell>
+        <StyledTableCell>{project.emp_name}</StyledTableCell>
         <StyledTableCell align="right">
           <Box display={"flex"} justifyContent="flex-end">
             <Box className="cursor">

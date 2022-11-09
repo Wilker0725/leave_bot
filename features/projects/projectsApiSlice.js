@@ -24,7 +24,7 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
       transformResponse: (responseData) => {
         const { currentPage, recordCount, totalPages } = responseData
 
-        const loadedProjects = responseData?.projects.map((project) => project)
+        const loadedProjects = responseData?.resources.map((project) => project)
 
         loadedProjects.push({
           id: "pageInfo",
@@ -45,13 +45,15 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
       },
     }),
     addNewProject: builder.mutation({
-      query: (data) => ({
-        url: "/api/projects",
-        method: "POST",
-        body: {
-          ...data,
-        },
-      }),
+      query: (data) => {
+        return {
+          url: "/api/projects",
+          method: "POST",
+          body: {
+            ...data,
+          },
+        }
+      },
       invalidatesTags: [{ type: "Project", id: "LIST" }],
     }),
     updateProject: builder.mutation({
