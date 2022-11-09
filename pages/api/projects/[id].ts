@@ -21,18 +21,18 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (method) {
     case "GET":
       try {
-        const user = await prisma.users.findFirst({
+        const resource = await prisma.projects.findFirst({
           ...queryFilter,
         });
 
-        if (!user) {
+        if (!resource) {
           return res.status(404).json({
             error: `Sorry the user with id: ${id} was not found.`,
           });
         }
 
         res.status(200).json({
-          user: user,
+          resource: resource,
         });
       } catch (error) {
         res
@@ -47,17 +47,17 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         const today = new Date();
         const formattedDate = today.toISOString();
 
-        const userExist = await prisma.users.findFirst({
+        const resourceExist = await prisma.projects.findFirst({
           ...queryFilter,
         });
 
-        if (!userExist) {
+        if (!resourceExist) {
           return res.status(404).json({
             error: `Sorry the user with id: ${id} was not found.`,
           });
         }
 
-        const user = await prisma.users.update({
+        const resource = await prisma.projects.update({
           where: {
             id: parseInt(id as string, 10),
           },
@@ -67,7 +67,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         });
 
-        res.status(200).json({ user: user });
+        res.status(200).json({ resource: resource });
       } catch (error) {
         res
           .status(500)
@@ -81,17 +81,17 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         const today = new Date();
         const formattedDate = today.toISOString();
 
-        const userExist = await prisma.users.findFirst({
+        const resourceExist = await prisma.projects.findFirst({
           ...queryFilter,
         });
 
-        if (!userExist) {
+        if (!resourceExist) {
           return res.status(404).json({
             error: `Sorry the user with id: ${id} was not found.`,
           });
         }
 
-        await prisma.users.update({
+        await prisma.projects.update({
           where: {
             id: parseInt(id as string, 10),
           },
@@ -101,7 +101,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         });
 
-        res.status(204).json({ message: 'Successful'});
+        res.status(204).json({ message: "Successful" });
       } catch (error) {
         res
           .status(500)

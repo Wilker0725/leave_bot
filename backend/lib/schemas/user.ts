@@ -1,13 +1,13 @@
 import { object, string, TypeOf } from "yup";
 
 export const userSchema = object().shape({
-  cognizant_user_id: string().required("Cognizant id is a required field"),
-  cognizant_username: string().required("Cognizant username is a required field"),
-  name: string().required("Name is a required field"),
-  first_name: string().required("First name is a required field"),
-  last_name: string().required("Last name is a required field"),
-  role: string().required("Role is a required field"),
-  team_name: string().required("Team name is a required field"),
+  emp_id: string().required("Employee id is a required field"),
+  emp_name: string().required("Employee name is a required field"),
+  project_name: string().required("Project name is a required field"),
+  po_number: string().required("Purchase order number is a required field"),
+  so_number: string().required("Sales order number is a required field"),
+  start_date: string().required("Start date is a required field"),
+  end_date: string().required("End date is a required field"),
 });
 
 export type Users = TypeOf<typeof userSchema>;

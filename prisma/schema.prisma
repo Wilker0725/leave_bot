@@ -7,101 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model client_accounts {
-  id            Int             @id @default(autoincrement())
-  name          String?         @db.VarChar
-  code          String?         @db.VarChar
-  is_active     Boolean?        @default(true)
-  created_by    String?         @db.VarChar
-  updated_by    String?         @db.VarChar
-  created_at    DateTime        @db.Timestamp(6)
-  updated_at    DateTime        @db.Timestamp(6)
-  project_teams project_teams[]
-}
-
-model leave_types {
-  id         Int      @id @default(autoincrement())
-  name       String?  @db.VarChar
-  code       String?  @db.VarChar
-  is_active  Boolean? @default(true)
-  created_by String?  @db.VarChar
-  updated_by String?  @db.VarChar
-  created_at DateTime @db.Timestamp(6)
-  updated_at DateTime @db.Timestamp(6)
-  leaves     leaves[]
-}
-
-model leaves {
-  id            Int          @id @default(autoincrement())
-  user_id       Int?
-  leave_type    String?      @db.VarChar
-  start_date    DateTime?    @db.Timestamp(6)
-  end_date      DateTime?    @db.Timestamp(6)
-  half_days     String?
-  editable      Boolean?     @default(true)
-  partial_days  String?      @default("None") @db.VarChar
-  gcal_event_id String?      @db.VarChar(255)
-  created_at    DateTime     @db.Timestamp(6)
-  updated_at    DateTime     @db.Timestamp(6)
-  leave_type_id Int?
-  leave_types   leave_types? @relation(fields: [leave_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_1258ed7339")
-  user          users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model project_teams {
-  id                Int              @id @default(autoincrement())
-  client_account_id Int?
-  name              String?          @db.VarChar
-  code              String?          @db.VarChar
-  report_type       String?          @db.VarChar
-  is_active         Boolean?         @default(true)
-  created_by        String?          @db.VarChar
-  updated_by        String?          @db.VarChar
-  created_at        DateTime         @db.Timestamp(6)
-  updated_at        DateTime         @db.Timestamp(6)
-  client_accounts   client_accounts? @relation(fields: [client_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_0181c0c8e2")
-  users             users[]
-}
-
-model service_lines {
-  id         Int      @id @default(autoincrement())
-  name       String?  @db.VarChar
-  code       String?  @db.VarChar
-  is_active  Boolean? @default(true)
-  created_by String?  @db.VarChar
-  updated_by String?  @db.VarChar
-  created_at DateTime @db.Timestamp(6)
-  updated_at DateTime @db.Timestamp(6)
-  users      users[]
-}
-
-model users {
-  id                   Int            @id @default(autoincrement())
-  name                 String?        @db.VarChar
-  title                String?        @db.VarChar
-  telegram_ref_id      String?        @db.VarChar
-  first_name           String?        @db.VarChar
-  last_name            String?        @db.VarChar
-  cognizant_user_id    String?        @db.VarChar(50)
-  cognizant_username   String?        @db.VarChar(150)
-  reading_username     Boolean?       @default(false)
-  reading_user_id      Boolean?       @default(false)
-  created_at           DateTime       @db.Timestamp(6)
-  updated_at           DateTime       @db.Timestamp(6)
-  team_name            String?        @db.VarChar(500)
-  reading_team_name    Boolean?       @default(false)
-  authorized           Boolean?       @default(false)
-  role                 String?        @default("Associate") @db.VarChar
-  account_name         String?        @default("None") @db.VarChar(255)
-  reading_account_name Boolean?       @default(false)
-  project_team_id      Int?
-  service_line_id      Int?
-  is_active            Boolean?       @default(true)
-  specialization       String?        @db.VarChar
-  skill_level          String?        @db.VarChar
-  project_teams        project_teams? @relation(fields: [project_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_3ffdfa6c22")
-  service_lines        service_lines? @relation(fields: [service_line_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_7871c505a8")
-  leave                leaves[]
-
-  @@index([telegram_ref_id], map: "index_users_on_telegram_ref_id")
+model projects {
+  id           Int      @id @default(autoincrement())
+  po_number    String   @db.VarChar
+  so_number    String   @db.VarChar
+  project_name String   @db.VarChar
+  start_date   DateTime @db.Timestamp(6)
+  end_date     DateTime @db.Timestamp(6)
+  emp_id       String   @db.VarChar
+  emp_name     String   @db.VarChar
+  created_at   DateTime @db.Timestamp(6)
+  updated_at   DateTime @db.Timestamp(6)
+  is_active    Boolean  @default(true)
 }
