@@ -61,7 +61,13 @@ const ProjectsList = () => {
     content = (
       <CustomizedTables
         minWidth={600}
-        headers={["Project Name", "Employee Id", "Employee Name"]}
+        headers={[
+          "Project Name",
+          "Employee Id",
+          "Employee Name",
+          "Purchase Order Number",
+          "Sales Order Number",
+        ]}
         setPage={(value) => {
           dispatch(setProjectPage(value));
         }}

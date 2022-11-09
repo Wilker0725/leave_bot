@@ -15,6 +15,8 @@ const Project: FC<{ project: Project }> = ({ project }) => {
         <StyledTableCell>{project.project_name}</StyledTableCell>
         <StyledTableCell>{project.emp_id}</StyledTableCell>
         <StyledTableCell>{project.emp_name}</StyledTableCell>
+        <StyledTableCell>{project.po_number}</StyledTableCell>
+        <StyledTableCell>{project.so_number}</StyledTableCell>
         <StyledTableCell align="right">
           <Box display={"flex"} justifyContent="flex-end">
             <Box className="cursor">

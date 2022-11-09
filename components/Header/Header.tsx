@@ -22,7 +22,7 @@ const Header = () => {
                 component="div"
               >
                 <GridViewOutlinedIcon />
-                <Box ml={1}>LEAVEBOT ADMIN UI</Box>
+                <Box ml={1}>ADMIN UI</Box>
               </Typography>
             </Link>
           </Box>

@@ -16,13 +16,13 @@ const Welcome = () => {
       <Box component={"h3"}>Welcome!</Box>
       <Typography>{today}</Typography>
       <Grid container mt={4} spacing={2}>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Link href="/users" passHref>
             <RecipeReviewCard message={"View Users"}>
               <GroupIcon fontSize="large" />
             </RecipeReviewCard>
           </Link>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={4}>
           <Link href="/projects" passHref>
             <RecipeReviewCard message={"View Projects"}>

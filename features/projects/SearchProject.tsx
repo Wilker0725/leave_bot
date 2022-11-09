@@ -43,7 +43,7 @@ const SearchProject = ({
 
   return (
     <Search onSubmit={onSubmit}>
-      <Grid item xs={6} md={3}>
+      <Grid item xs={6} md={4}>
         <TextField
           id="project_name"
           fullWidth
@@ -55,7 +55,7 @@ const SearchProject = ({
           inputRef={inputRef}
         />
       </Grid>
-      <Grid item xs={6} md={3}>
+      <Grid item xs={6} md={4}>
         <TextField
           id="emp_id"
           fullWidth
@@ -65,17 +65,7 @@ const SearchProject = ({
           onChange={onChangeText}
         />
       </Grid>
-      <Grid item xs={6} md={3}>
-        <TextField
-          fullWidth
-          id="po_number"
-          name="po_number"
-          label="Purchase Order Number"
-          variant="outlined"
-          onChange={onChangeText}
-        />
-      </Grid>
-      <Grid item xs={6} md={3}>
+      <Grid item xs={6} md={4}>
         <FormControl fullWidth>
           <InputLabel id="sort_by">Sort By</InputLabel>
           <Select
@@ -103,13 +93,13 @@ const SearchProject = ({
               },
               {
                 id: 3,
-                label: "Alphabetically, A-Z - Cognizant Username",
-                value: "&sort_by=cognizant_username&direction=asc",
+                label: "Alphabetically, A-Z - Employee Name",
+                value: "&sort_by=emp_name&direction=asc",
               },
               {
                 id: 3,
-                label: "Alphabetically, Z-A - Cognizant Username",
-                value: "&sort_by=cognizant_username&direction=desc",
+                label: "Alphabetically, Z-A - Employee Name",
+                value: "&sort_by=emp_name&direction=desc",
               },
               {
                 id: 5,
@@ -128,6 +118,26 @@ const SearchProject = ({
             ))}
           </Select>
         </FormControl>
+      </Grid>
+      <Grid item xs={6} md={4}>
+        <TextField
+          fullWidth
+          id="po_number"
+          name="po_number"
+          label="Purchase Order Number"
+          variant="outlined"
+          onChange={onChangeText}
+        />
+      </Grid>
+      <Grid item xs={6} md={4}>
+        <TextField
+          fullWidth
+          id="so_number"
+          name="so_number"
+          label="Sales Order Number"
+          variant="outlined"
+          onChange={onChangeText}
+        />
       </Grid>
       <Grid item md={12} ml={"auto"}>
         <Box display={"flex"}>
