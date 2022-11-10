@@ -16,8 +16,7 @@ import {
 } from "@/features/users/userSlice";
 import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import SearchUser from "@/features/users/SearchUser";
-import SearchLeaves from "@/features/leaves/searchLeaves";
+import SearchLeaves from "@/features/leaves/DesearchLeaves";
 import { useSelector } from "react-redux";
 
 type typeFormData = {
