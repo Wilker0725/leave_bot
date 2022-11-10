@@ -45,16 +45,27 @@ const SearchLeave = ({ onChangeText, onSubmit, formData }: typeSearchLeave) => {
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <TextField
-          id="start_date"
-          fullWidth
-          name="start_date"
-          variant="outlined"
-          type="date"
-          onChange={onChangeText}
-          autoFocus={true}
-          inputRef={inputRef}
-        />
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <StaticDatePicker
+            label="Start Date"
+            inputFormat="MM/DD/YYYY"
+            value={formData.start_date || null}
+            onChange={(value: Dayjs | Date) =>
+              onChangeDate(value, "start_date")
+            }
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </Grid>
+        <Grid item xs={6} md={3}>
+        <StaticDatePicker
+            label="End Date"
+            inputFormat="MM/DD/YYYY"
+            value={formData.end_date || null}
+            onChange={(value: Dayjs | Date) => onChangeDate(value, "end_date")}
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </Grid>  
+        </LocalizationProvider> */}
       </Grid>
       {/* <Grid item xs={6} md={3}>
         <TextField

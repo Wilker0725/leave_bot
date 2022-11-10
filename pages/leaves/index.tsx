@@ -16,7 +16,7 @@ import {
 } from "@/features/users/userSlice";
 import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import SearchLeaves from "@/features/leaves/DesearchLeaves";
+import SearchLeave from "@/features/leaves/SearchLeave";
 import { useSelector } from "react-redux";
 
 type typeFormData = {
@@ -85,7 +85,7 @@ const Leaves = () => {
           open={isSearchOpen}
           onClose={toggleDrawer(false)}
         >
-          <SearchLeaves
+          <SearchLeave
             formData={formData}
             onChangeText={handleSearchInput}
             onSubmit={handleOnSubmit}
