@@ -21,4 +21,4 @@
 
 ## Database
 
-- Postgresql
+- Postgresql -
