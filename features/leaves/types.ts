@@ -38,7 +38,7 @@ export type TypeLeave = {
   };
 };
 
-export type typeLeaveFormData = {
+export type FormDataLeave = {
   team_name: string;
   start_date: Dayjs | null;
   end_date: Dayjs | null;

@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/app/store";
 import CustomLeaveTable from "@/components/Tables/CustomLeaveTable";
 import Leaves from "@/features/leaves/Leave";
-import { useGetLeavesQuery } from "@/features/leaves/leavesApiSlice";
+import { useGetLeavesQuery } from "@/features/leaves/leaveApiSlice";
 import { useEffect } from "react";
 import {
   selectLeaveQuery,
@@ -11,7 +11,7 @@ import {
   setLeavePage,
   selectLeaveLimit,
   setLeavePageLimit,
-} from "@/features/leaves/leavesSlice";
+} from "@/features/leaves/leaveSlice";
 import { useSelector } from "react-redux";
 import useSessionStorage from "@/hooks/useSessionStorage";
 import { LinearProgress } from "@mui/material";

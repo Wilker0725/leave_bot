@@ -20,6 +20,7 @@ const leavesReducer = createSlice({
     page: 0,
     limit: 10,
     search: "",
+    isSearch: false,
   },
   reducers: {
     setLeavePageQuery: (state, action) => {

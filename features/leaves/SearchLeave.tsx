@@ -16,11 +16,17 @@ type typeSearchLeave = {
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       | SelectChangeEvent
   ) => void;
+  onChangeDate: (newValue: Dayjs | Date, name: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  formData: Partial<typeLeaveFormData>;
+  formData: Partial<FormDataLeave>;
 };
 
-const SearchLeave = ({ onChangeText, onSubmit, formData }: typeSearchLeave) => {
+const SearchLeave = ({
+  onChangeText,
+  onChangeDate,
+  onSubmit,
+  formData,
+}: typeSearchLeave) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

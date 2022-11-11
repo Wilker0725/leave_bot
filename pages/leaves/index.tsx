@@ -12,7 +12,7 @@ import {
   setLeavePage,
   setIsSearch,
   selectLeaveIsSearch,
-} from "@/features/leaves/leavesSlice";
+} from "@/features/leaves/leaveSlice";
 import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SearchLeave from "@/features/leaves/SearchLeave";
@@ -88,6 +88,7 @@ const Leave = () => {
         >
           <SearchLeave
             formData={formData}
+            onChangeDate={onChangeDate}
             onChangeText={handleSearchInput}
             onSubmit={handleOnSubmit}
           />
