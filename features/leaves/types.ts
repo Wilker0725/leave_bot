@@ -40,6 +40,6 @@ export type TypeLeave = {
 
 export type typeLeaveFormData = {
   team_name: string;
-  start_date: Date;
-  end_date: Date;
+  start_date: Dayjs | null;
+  end_date: Dayjs | null;
 };

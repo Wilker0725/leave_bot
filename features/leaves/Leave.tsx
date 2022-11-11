@@ -1,18 +1,12 @@
 import { FC } from "react";
-import Link from "next/link";
-import moment from "moment";
 
-import { useSelector } from "react-redux";
 import {
   StyledTableCell,
   StyledTableRow,
 } from "@/components/Tables/CustomLeaveTable";
+import dayjs from "dayjs";
 
-const Leaves: FC<{ leave: any }> = ({ leave }) => {
-  // console.log(leave);
-  // const leaves = useSelector((state) => {
-  //   return selectLeaveById(state, leave.id);
-  // });
+const Leave: FC<{ leave: any }> = ({ leave }) => {
   if (leave) {
     return (
       <StyledTableRow>
@@ -20,11 +14,16 @@ const Leaves: FC<{ leave: any }> = ({ leave }) => {
         <StyledTableCell>{leave.users.cognizant_user_id}</StyledTableCell>
         <StyledTableCell>{leave.users.team_name}</StyledTableCell>
         <StyledTableCell>{leave.leave_type}</StyledTableCell>
-        <StyledTableCell>{leave.start_date}</StyledTableCell>
-        <StyledTableCell>{leave.end_date}</StyledTableCell>
+        <StyledTableCell>{leave.partial_days}</StyledTableCell>
+        <StyledTableCell>
+          {dayjs(leave.start_date).format("YYYY/MM/DD hh:mm:ss A")}
+        </StyledTableCell>
+        <StyledTableCell>
+          {dayjs(leave.end_date).format("YYYY/MM/DD hh:mm:ss A")}
+        </StyledTableCell>
       </StyledTableRow>
     );
   } else return null;
 };
 
-export default Leaves;
+export default Leave;

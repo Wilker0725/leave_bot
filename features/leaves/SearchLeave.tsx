@@ -2,10 +2,13 @@ import Search from "@/components/Search";
 import { Button, Grid, SelectChangeEvent, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { GridSearchIcon } from "@mui/x-data-grid";
-import { typeLeaveFormData } from "./types";
-import DateRangePicker from "@/components/DateRangePicker/MuiDateRangePicker";
+import { FormDataLeave } from "./types";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 import React, { useEffect, useRef } from "react";
+import { Dayjs } from "dayjs";
 
 type typeSearchLeave = {
   onChangeText: (
@@ -44,11 +47,16 @@ const SearchLeave = ({ onChangeText, onSubmit, formData }: typeSearchLeave) => {
           inputRef={inputRef}
         />
       </Grid>
-      <Grid item xs={6} md={3}>
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticDatePicker
+      {/* 
+        Server expected: 10-11-2022
+        Client sent: 2022-11-18T00%253A00%253A00%252B08%253A00
+      */}
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Grid item xs={6} md={3}>
+          <DesktopDatePicker
             label="Start Date"
-            inputFormat="MM/DD/YYYY"
+            inputFormat="YYYY/MM/DD"
             value={formData.start_date || null}
             onChange={(value: Dayjs | Date) =>
               onChangeDate(value, "start_date")
@@ -57,28 +65,15 @@ const SearchLeave = ({ onChangeText, onSubmit, formData }: typeSearchLeave) => {
           />
         </Grid>
         <Grid item xs={6} md={3}>
-        <StaticDatePicker
+          <DesktopDatePicker
             label="End Date"
-            inputFormat="MM/DD/YYYY"
+            inputFormat="YYYY/MM/DD"
             value={formData.end_date || null}
             onChange={(value: Dayjs | Date) => onChangeDate(value, "end_date")}
             renderInput={(params) => <TextField {...params} fullWidth />}
           />
-        </Grid>  
-        </LocalizationProvider> */}
-      </Grid>
-      {/* <Grid item xs={6} md={3}>
-        <TextField
-          id="end_date"
-          fullWidth
-          name="end_date"
-          variant="outlined"
-          type="date"
-          onChange={onChangeText}
-          autoFocus={true}
-          inputRef={inputRef}
-        />
-      </Grid> */}
+        </Grid>
+      </LocalizationProvider>
       <Grid item md={12} ml={"auto"}>
         <Box display={"flex"}>
           <Box ml="auto">

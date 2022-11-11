@@ -79,30 +79,4 @@ export const leavesApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
 });
 
-export const {
-  useGetLeavesQuery,
-  // useAddNewLeaveMutation,
-  // useUpdateLeaveMutation,
-  // useDeleteLeaMutation,
-} = leavesApiSlice;
-
-// export const getUserSelectors = (query) => {
-//   const selectUsersResult = usersApiSlice.endpoints.getUsers.select(query)
-
-//   const adapterSelectors = createSelector(selectUsersResult, (result) =>
-//     usersAdapter.getSelectors(() => result?.data ?? initialState)
-//   )
-
-//   return {
-//     selectAll: createSelector(adapterSelectors, (s) => s.selectAll(undefined)),
-//     selectEntities: createSelector(adapterSelectors, (s) =>
-//       s.selectEntities(undefined)
-//     ),
-//     selectIds: createSelector(adapterSelectors, (s) => s.selectIds(undefined)),
-//     selectTotal: createSelector(adapterSelectors, (s) =>
-//       s.selectTotal(undefined)
-//     ),
-//     selectById: (id) =>
-//       createSelector(adapterSelectors, (s) => s.selectById(s, id)),
-//   }
-// }
+export const { useGetLeavesQuery } = leavesApiSlice;

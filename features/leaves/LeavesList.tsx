@@ -1,33 +1,31 @@
 import { useAppDispatch } from "@/app/store";
-// import CustomizedTables from "@/components/Tables/CustomizedTable";
 import CustomLeaveTable from "@/components/Tables/CustomLeaveTable";
-import User from "@/features/users/User";
-import Leaves from "./leaves";
-import { useGetUsersQuery } from "@/features/users/usersApiSlice";
+import Leaves from "@/features/leaves/Leave";
 import { useGetLeavesQuery } from "@/features/leaves/leavesApiSlice";
 import { useEffect } from "react";
 import {
-  selectUserQuery,
-  setUserPageQuery,
-  selectUserSearch,
-  selectUserPage,
-  setUserPage,
-  selectUserLimit,
-  setUserPageLimit,
-} from "@/features/users/userSlice";
-import { setLeavesPageQuery } from "@/features/leaves/leavesSlice";
+  selectLeaveQuery,
+  setLeavePageQuery,
+  selectLeaveSearch,
+  selectLeavePage,
+  setLeavePage,
+  selectLeaveLimit,
+  setLeavePageLimit,
+} from "@/features/leaves/leavesSlice";
 import { useSelector } from "react-redux";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import { LinearProgress } from "@mui/material";
+import Toast from "@/components/Toast";
 
 const LeavesList = () => {
   const dispatch = useAppDispatch();
-  const pageSearchQuery = useSelector(selectUserQuery);
-  const pageSearch = useSelector(selectUserSearch);
-  const page = useSelector(selectUserPage);
-  const limit = useSelector(selectUserLimit);
+  const pageSearchQuery = useSelector(selectLeaveQuery);
+  const pageSearch = useSelector(selectLeaveSearch);
+  const page = useSelector(selectLeavePage);
+  const limit = useSelector(selectLeaveLimit);
 
   const [_, setSessionStorageLeavesQuery] = useSessionStorage(
-    "leaves-query",
+    "leave-query",
     pageSearchQuery
   );
 
@@ -41,15 +39,19 @@ const LeavesList = () => {
   useEffect(() => {
     const queryString = `page=${page + 1}&limit=${limit}&${pageSearch}`;
 
-    dispatch(setUserPageQuery(queryString));
+    dispatch(setLeavePageQuery(queryString));
 
     setSessionStorageLeavesQuery(queryString);
   }, [page, limit, dispatch, pageSearch, setSessionStorageLeavesQuery]);
 
   let content = null;
 
-  if (isLoading) content = <p>Loading...</p>;
-  if (isError) content = <p>Error</p>;
+  if (isLoading) content = <LinearProgress color="inherit" />;
+  if (isError)
+    Toast({
+      type: "error",
+      message: "Something when wrong, unable to retrieve leaves list.",
+    });
 
   if (isSuccess) {
     let { ids, entities } = leaves;
@@ -69,16 +71,17 @@ const LeavesList = () => {
           "Cognizant ID",
           "Project Name",
           "Leave Type",
+          "Partial Days",
           "Start Date",
           "End Date",
         ]}
         setPage={(value) => {
-          dispatch(setUserPage(value));
+          dispatch(setLeavePage(value));
         }}
         page={page}
         rowsPerPage={limit}
         setRowsPerPage={(value) => {
-          dispatch(setUserPageLimit(value));
+          dispatch(setLeavePageLimit(value));
         }}
         totalPage={pageInfo.recordCount}
       >

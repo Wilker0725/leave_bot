@@ -1,37 +1,29 @@
-import NextLink from "next/link";
-import UsersList from "@/features/users/UsersList";
-import LeavesList from "@/features/leaves/leavesList";
-import { IconButton, SelectChangeEvent, Stack } from "@mui/material";
+import LeavesList from "@/features/leaves/LeavesList";
+import { IconButton, Stack } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
-import Link from "@mui/material/Link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Container from "@mui/material/Container";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import { useAppDispatch } from "@/app/store";
 import {
-  setUserPageQuery,
-  setUserSearch,
+  setLeavePageQuery,
+  setLeaveSearch,
   resetQuery,
-  setUserPage,
-} from "@/features/users/userSlice";
+  setLeavePage,
+  setIsSearch,
+  selectLeaveIsSearch,
+} from "@/features/leaves/leavesSlice";
 import { objectToQuery } from "@/utils/queryTransform";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SearchLeave from "@/features/leaves/SearchLeave";
 import { useSelector } from "react-redux";
+import dayjs, { Dayjs } from "dayjs";
+import { FormDataLeave } from "@/features/leaves/types";
 
-type typeFormData = {
-  employeeName?: string;
-  employeeId?: string;
-  projectName?: string;
-  leaveType?: string;
-  startDate?: string;
-  endDate?: string;
-};
-
-const Leaves = () => {
+const Leave = () => {
   const dispatch = useAppDispatch();
-  //   const isSearch = useSelector(selectUserIsSearch);
-  const [formData, setFormData] = useState<typeFormData | object>({});
+  const isSearch = useSelector(selectLeaveIsSearch);
+  const [formData, setFormData] = useState<Partial<FormDataLeave>>({});
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const handleSearchInput = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,17 +31,26 @@ const Leaves = () => {
     const name = event.target.name;
     setFormData({ ...formData, [name]: event.target.value.trim() });
   };
+
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userQuery = objectToQuery(formData);
-    dispatch(setUserSearch(userQuery));
-    dispatch(setUserPage(0));
-    dispatch(setUserPageQuery(`page=1&limit=10&${userQuery}`));
-    dispatch(setUserSearch(true));
+    const leaveQuery = objectToQuery(formData);
+
+    dispatch(setLeaveSearch(leaveQuery));
+    dispatch(setLeavePage(0));
+    dispatch(setLeavePageQuery(`page=1&limit=10&${leaveQuery}`));
+
+    dispatch(setIsSearch(true));
+
     // reset state
     setIsSearchOpen(false);
     setFormData({});
   };
+
+  const onChangeDate = (newValue: Dayjs | null, name: string) => {
+    setFormData({ ...formData, [name]: dayjs(newValue).toISOString() });
+  };
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -68,7 +69,7 @@ const Leaves = () => {
           <IconButton color={"info"} onClick={toggleDrawer(true)}>
             <GridSearchIcon />
           </IconButton>
-          {/* {isSearch ? (
+          {isSearch ? (
             <IconButton
               color={"info"}
               style={{ paddingLeft: 0 }}
@@ -78,7 +79,7 @@ const Leaves = () => {
             >
               <RestartAltIcon />
             </IconButton>
-          ) : null} */}
+          ) : null}
         </Stack>
         <Drawer
           anchor={"top"}
@@ -97,4 +98,4 @@ const Leaves = () => {
   );
 };
 
-export default Leaves;
+export default Leave;

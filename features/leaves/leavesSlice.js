@@ -6,7 +6,7 @@ let initialState = {
   query:
     typeof window === "undefined"
       ? LEAVES_QUERY
-      : JSON.parse(window.sessionStorage.getItem("leaves-query")),
+      : JSON.parse(window.sessionStorage.getItem("leave-query")),
 };
 
 if (initialState.query === null) {
@@ -14,7 +14,7 @@ if (initialState.query === null) {
 }
 
 const leavesReducer = createSlice({
-  name: "leaves",
+  name: "leave",
   initialState: {
     ...initialState,
     page: 0,
@@ -22,40 +22,46 @@ const leavesReducer = createSlice({
     search: "",
   },
   reducers: {
-    setleavesPageQuery: (state, action) => {
+    setLeavePageQuery: (state, action) => {
       const query = action.payload;
       state.query = query;
     },
-    setLeavesPage: (state, action) => {
+    setLeavePage: (state, action) => {
       state.page = action.payload;
     },
-    setLeavesPageLimit: (state, action) => {
+    setLeavePageLimit: (state, action) => {
       console.log("action.payload limit: ", action.payload);
 
       state.limit = action.payload;
     },
-    setLeavesSearch: (state, action) => {
+    setLeaveSearch: (state, action) => {
       state.search = action.payload;
+    },
+    setIsSearch: (state, action) => {
+      state.isSearch = action.payload;
     },
     resetQuery: (state, action) => {
       state.query = "page=1&limit=10";
       state.search = "";
       state.page = 0;
+      state.isSearch = false;
     },
   },
 });
 
 export const {
-  setLeavesPageQuery,
-  setLeavesSearch,
+  setLeavePageQuery,
+  setLeaveSearch,
   resetQuery,
-  setLeavesPage,
-  setLeavesPageLimit,
+  setLeavePage,
+  setLeavePageLimit,
+  setIsSearch,
 } = leavesReducer.actions;
 
 export default leavesReducer.reducer;
 
-export const selectLeavesQuery = (state) => state.leaves.query;
-export const selectLeavesSearch = (state) => state.leaves.search;
-export const selectLeavesPage = (state) => state.leaves.page;
-export const selectLeavesLimit = (state) => state.leaves.limit;
+export const selectLeaveQuery = (state) => state.leave.query;
+export const selectLeaveSearch = (state) => state.leave.search;
+export const selectLeavePage = (state) => state.leave.page;
+export const selectLeaveLimit = (state) => state.leave.limit;
+export const selectLeaveIsSearch = (state) => state.leave.isSearch;
