@@ -8,8 +8,7 @@ const App = () => {
   const { data: session } = useSession();
   const { data: token } = useSession();
 
-  console.log(token)
-  console.log(session);
+
 
 if (!session){
   return (

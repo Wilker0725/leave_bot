@@ -14,7 +14,7 @@ const Header = () => {
 
  const  {data:session} = useSession();
 
- console.log(session);
+
 
   return (
     <Box sx={{ mb: 2 }} mb={4}>

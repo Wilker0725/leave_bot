@@ -58,11 +58,11 @@ const  ChangePassword = () => {
       setPageState(old => ({ ...old, processing: false, error: "Password enter does not match" }))
     }
 
-       console.log({
-        password: data.get('password'),
-        reenterPassword: data.get('reenterpassword')
+    //    console.log({
+    //     password: data.get('password'),
+    //     reenterPassword: data.get('reenterpassword')
 
-    });
+    // });
     const email = session.user.email;
 
     await axios.put("/api/admin/updateAdmin", {

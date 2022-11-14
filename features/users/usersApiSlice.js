@@ -29,7 +29,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         loadedUsers.push({
           id: "pageInfo",
           currentPage,
-          recordCount,
+          recordCount,  
           totalPages,
         });
 
