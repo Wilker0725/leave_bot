@@ -55,10 +55,7 @@ const simplifyError = (error) => {
     const enteredEmail = data.get('email');
     const enteredPassword = data.get('password');
 
-       console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
 
 
     // optional: Add validation
@@ -72,7 +69,6 @@ const simplifyError = (error) => {
         password: enteredPassword,
       });
 
-      console.log(result);
 
       if (!result.error) {
 
@@ -82,8 +78,7 @@ const simplifyError = (error) => {
           </Box>
         )
 
-        // set some auth state
-        //router.replace('/signin');
+
       }else{
           setPageState(old => ({ ...old, processing: false, error: result.error }))
       
