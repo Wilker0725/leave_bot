@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/app/store";
-import CustomLeaveTable from "@/components/Tables/CustomLeaveTable";
+import CustomizedTable from "@/components/Tables/CustomizedTable";
 import Leaves from "@/features/leaves/Leave";
 import { useGetLeavesQuery } from "@/features/leaves/leaveApiSlice";
 import { useEffect } from "react";
@@ -56,15 +56,10 @@ const LeavesList = () => {
   if (isSuccess) {
     let { ids, entities } = leaves;
 
-    /**
-        Walk around from apiSlice to pass pageInfo 
-        Need to remove from here 
-        - to remove the last item
-     */
     const pageInfo = entities["pageInfo"];
 
     content = (
-      <CustomLeaveTable
+      <CustomizedTable
         minWidth={600}
         headers={[
           "Associate Name",
@@ -89,11 +84,10 @@ const LeavesList = () => {
           ? ids.map((id: string) => {
               if (id === "pageInfo") return null;
 
-              // return <User key={entities[id].id} user={entities[id]} />;
               return <Leaves key={entities[id].id} leave={entities[id]} />;
             })
           : null}
-      </CustomLeaveTable>
+      </CustomizedTable>
     );
 
     return content;

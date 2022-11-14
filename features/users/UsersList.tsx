@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/app/store";
-import CustomizedTables from "@/components/Tables/CustomizedTable";
+import CustomizedTable from "@/components/Tables/CustomizedTable";
 import User from "@/features/users/User";
 import { useGetUsersQuery } from "@/features/users/usersApiSlice";
 import { useEffect } from "react";
@@ -59,9 +59,9 @@ const UsersList = () => {
     const pageInfo = entities["pageInfo"];
 
     content = (
-      <CustomizedTables
+      <CustomizedTable
         minWidth={600}
-        headers={["Name", "Employee Id", "Role", "Team Name"]}
+        headers={["Name", "Employee Id", "Role", "Team Name", "Action"]}
         setPage={(value) => {
           dispatch(setUserPage(value));
         }}
@@ -79,7 +79,7 @@ const UsersList = () => {
               return <User key={entities[id].id} user={entities[id]} />;
             })
           : null}
-      </CustomizedTables>
+      </CustomizedTable>
     );
 
     return content;

@@ -1,9 +1,8 @@
 import { FC } from "react";
-
 import {
   StyledTableCell,
   StyledTableRow,
-} from "@/components/Tables/CustomLeaveTable";
+} from "@/components/Tables/CustomizedTable";
 import dayjs from "dayjs";
 
 const Leave: FC<{ leave: any }> = ({ leave }) => {

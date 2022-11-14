@@ -70,10 +70,19 @@ export default function CustomizedTable({
       <Table sx={{ minWidth: minWidth || 700 }} aria-label="Table">
         <TableHead>
           <TableRow>
-            {headers.map((header, i) => (
-              <StyledTableCell key={i}>{header}</StyledTableCell>
-            ))}
-            <StyledTableCell align="right">Actions</StyledTableCell>
+            {headers.map((header, i) => {
+              const row = (
+                <StyledTableCell
+                  key={i}
+                  {...(header.toLowerCase() == "action" && {
+                    align: "right",
+                  })}
+                >
+                  {header}
+                </StyledTableCell>
+              );
+              return row;
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
