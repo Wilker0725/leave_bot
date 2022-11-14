@@ -41,7 +41,7 @@ const SearchLeave = ({
 
   return (
     <Search onSubmit={onSubmit}>
-      <Grid item xs={6} md={3}>
+      <Grid item xs={6} md={4}>
         <TextField
           fullWidth
           id="team_name"
@@ -59,7 +59,7 @@ const SearchLeave = ({
       */}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={4}>
           <DesktopDatePicker
             label="Start Date"
             inputFormat="YYYY/MM/DD"
@@ -70,7 +70,7 @@ const SearchLeave = ({
             renderInput={(params) => <TextField {...params} fullWidth />}
           />
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={4}>
           <DesktopDatePicker
             label="End Date"
             inputFormat="YYYY/MM/DD"
