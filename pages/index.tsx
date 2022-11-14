@@ -1,7 +1,24 @@
-import Welcome from "@/features/auth/Welcome";
-import { Box } from "@mui/system";
+import Welcome from "@/features/auth/Welcome"
+import Login from "@/components/Login"
+import ChangePassword from "@/components/Changepassword/Changepassword"
+import { Box } from "@mui/system"
+import { useSession } from "next-auth/react"
 
 const App = () => {
+  const { data: session } = useSession();
+  const { data: token } = useSession();
+
+  console.log(token)
+  console.log(session);
+
+if (!session){
+  return (
+    <Box display={"flex"} flexDirection="column">
+      <Login />
+    </Box>
+  )
+}
+else{
   return (
     <Box display={"flex"} flexDirection="column">
       <Welcome />
@@ -9,4 +26,6 @@ const App = () => {
   );
 };
 
-export default App;
+}
+
+export default App
