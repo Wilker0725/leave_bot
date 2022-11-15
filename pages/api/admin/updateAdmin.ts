@@ -29,7 +29,7 @@ export default async function handler(
 
   if (!user) {
     res.status(401).json({
-      error: "Email not exisits!",
+      error: "Email not exist!",
     });
   }
 

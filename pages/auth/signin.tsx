@@ -12,14 +12,15 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
-import Welcome from "@/features/auth/Welcome";
 
 const theme = createTheme();
 
 const SignIn = () => {
   const router = useRouter();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //
+  }, []);
 
   const [pageState, setPageState] = useState({
     error: "",
@@ -27,10 +28,7 @@ const SignIn = () => {
   });
 
   const simplifyError = (error) => {
-    const errorMap = {
-      CredentialsSignin: "Invalid username or password",
-    };
-    return errorMap[error] ?? "Unknown error occurred";
+    return error.length > 0 ? error : "Unknown error occurred";
   };
 
   async function submitHandler(event) {
@@ -39,23 +37,33 @@ const SignIn = () => {
     const enteredEmail = data.get("email");
     const enteredPassword = data.get("password");
 
-    // optional: Add validation
-
     setPageState((old) => ({ ...old, processing: true, error: "" }));
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: enteredEmail,
-      password: enteredPassword,
-    });
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+      console.log("result:  :>> ", result);
+      switch (result.error) {
+        case "AccessDenied":
+          // first time login, go to change password
+          router.push({
+            pathname: "/auth/change-password",
+            query: { email: enteredEmail } as { email: string },
+          });
+          break;
+        case "CredentialsSignin":
+          throw "Invalid email or password";
+      }
 
-    if (!result.error) {
-      router.push("/");
-    } else {
+      if (result.status === 200 && result.ok) router.push("/");
+    } catch (error) {
       setPageState((old) => ({
         ...old,
         processing: false,
-        error: result.error,
+        error,
       }));
     }
   }

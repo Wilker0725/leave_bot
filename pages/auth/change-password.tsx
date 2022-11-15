@@ -44,19 +44,29 @@ const ChangePassword = () => {
       }));
     }
 
-    const email = session.user.email;
+    const email = router.query.email;
+
+    if (email.length <= 0) {
+      setPageState((old) => ({
+        ...old,
+        processing: false,
+        error: "Something went wrong",
+      }));
+      return;
+    }
 
     await axios.put("/api/admin/updateAdmin", {
       email: email,
       password: password,
     });
+
     setPageState((old) => ({
       ...old,
       processing: false,
       error: "Password changes successfully...",
     }));
 
-    router.push("./");
+    router.push("/");
   }
 
   return (
@@ -93,6 +103,7 @@ const ChangePassword = () => {
               id="password"
               label="Enter Password"
               name="password"
+              type="password"
               autoComplete="password"
               autoFocus
             />
@@ -102,7 +113,7 @@ const ChangePassword = () => {
               fullWidth
               name="reenterpassword"
               label="Retype Password"
-              type="reenterpassword"
+              type="password"
               id="reenterpassword"
               autoComplete="current-password"
             />
