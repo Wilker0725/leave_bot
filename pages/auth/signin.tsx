@@ -18,10 +18,6 @@ const theme = createTheme();
 const SignIn = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    //
-  }, []);
-
   const [pageState, setPageState] = useState({
     error: "",
     processing: false,
@@ -45,7 +41,7 @@ const SignIn = () => {
         email: enteredEmail,
         password: enteredPassword,
       });
-      console.log("result:  :>> ", result);
+
       switch (result.error) {
         case "AccessDenied":
           // first time login, go to change password

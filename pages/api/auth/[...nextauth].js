@@ -4,8 +4,6 @@ import { PrismaClient } from "@prisma/client";
 import { hashPassword, verifyPassword } from "@/backend/utils/auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-let userAccount = null;
-
 const prisma = new PrismaClient();
 
 const authOptions = {
