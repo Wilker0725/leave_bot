@@ -18,25 +18,26 @@ const App = ({ isAuth }) => {
     }
   }, [session, router]);
 
-    return (
-      <Box display={"flex"} flexDirection="column">
-        <Welcome />
-      </Box>
+  return (
+    <Box display={"flex"} flexDirection="column">
+      <Welcome />
+    </Box>
+  );
 };
 
-export async function getServerSideProps(context) {
-  const isAuth = context?.cookies
-    ? context.cookies["next-auth.session-token"].length > 0
-    : false;
+// export async function getServerSideProps(context) {
+//   const isAuth = context?.cookies
+//     ? context.cookies["next-auth.session-token"].length > 0
+//     : false;
 
-  // console.log("context?.cookies", context.cookies);
+//   // console.log("context?.cookies", context.cookies);
 
-  console.log("isAuth :>> ", isAuth);
-  return {
-    props: {
-      isAuth,
-    },
-  };
-}
+//   console.log("isAuth :>> ", isAuth);
+//   return {
+//     props: {
+//       isAuth,
+//     },
+//   };
+// }
 
 export default App;
