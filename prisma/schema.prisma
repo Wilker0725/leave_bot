@@ -106,7 +106,7 @@ model users {
   @@index([telegram_ref_id], map: "index_users_on_telegram_ref_id")
 }
 
-model admin {
+model admins {
   id         Int       @id @unique @default(autoincrement())
   name       String?   @db.VarChar
   email      String    @unique @db.VarChar

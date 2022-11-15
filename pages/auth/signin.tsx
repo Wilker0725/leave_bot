@@ -1,64 +1,63 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState, useRef } from "react";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import LockResetIcon from "@mui/icons-material/LockReset";
-import Alert from "@mui/material/Alert";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import { Alert } from "@mui/material";
+import Welcome from "@/features/auth/Welcome";
 
 const theme = createTheme();
 
-const ChangePassword = () => {
+const SignIn = () => {
+  const router = useRouter();
+
+  useEffect(() => {}, []);
+
   const [pageState, setPageState] = useState({
     error: "",
     processing: false,
   });
-  const { data: session } = useSession();
 
-  const router = useRouter();
+  const simplifyError = (error) => {
+    const errorMap = {
+      CredentialsSignin: "Invalid username or password",
+    };
+    return errorMap[error] ?? "Unknown error occurred";
+  };
 
   async function submitHandler(event) {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const enteredEmail = data.get("email");
+    const enteredPassword = data.get("password");
+
+    // optional: Add validation
+
     setPageState((old) => ({ ...old, processing: true, error: "" }));
 
-    const data = new FormData(event.currentTarget);
-    const password = data.get("password");
-    const reenterPassword = data.get("reenterpassword");
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: enteredEmail,
+      password: enteredPassword,
+    });
 
-    if (password !== reenterPassword) {
+    if (!result.error) {
+      router.push("/");
+    } else {
       setPageState((old) => ({
         ...old,
         processing: false,
-        error: "Password enter does not match",
+        error: result.error,
       }));
     }
-
-    const email = session.user.email;
-
-    await axios.put("/api/admin/updateAdmin", {
-      email: email,
-      password: password,
-    });
-    setPageState((old) => ({
-      ...old,
-      processing: false,
-      error: "Password changes successfully...",
-    }));
-
-    router.push("./");
   }
 
   return (
@@ -74,13 +73,10 @@ const ChangePassword = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockResetIcon />
+            <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Change Password
-          </Typography>
-          <Typography component="h5" variant="subtitle2">
-            First Time Login User...Please change password
+            Sign in
           </Typography>
           <Box
             component="form"
@@ -92,36 +88,34 @@ const ChangePassword = () => {
               margin="normal"
               required
               fullWidth
-              id="password"
-              label="Enter Password"
-              name="password"
-              autoComplete="password"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="reenterpassword"
-              label="Retype Password"
-              type="reenterpassword"
-              id="reenterpassword"
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
               autoComplete="current-password"
             />
-
             {pageState.error !== "" && (
               <Alert severity="error" sx={{ mb: 2 }}>
-                {pageState.error}
+                {simplifyError(pageState.error)}
               </Alert>
             )}
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Change Password
+              Sign In
             </Button>
           </Box>
         </Box>
@@ -130,4 +124,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default SignIn;

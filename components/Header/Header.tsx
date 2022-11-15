@@ -8,13 +8,10 @@ import Button from "@mui/material/Button";
 import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header = () => {
-
- const  {data:session} = useSession();
-
-
+  const { data: session } = useSession();
 
   return (
     <Box sx={{ mb: 2 }} mb={4}>
@@ -31,21 +28,17 @@ const Header = () => {
                 <Box ml={1}>LEAVEBOT ADMIN UI</Box>
               </Typography>
             </Link>
-{session &&( 
-<Box ml={"auto"}>
-              <Link href="/">
-
-                <Typography
-                  variant="h6"
-                  component="div"
-                >
-                  <Box ml={1} onClick={() => signOut()}>logout</Box>
-                </Typography>
-              </Link>
-
-</Box>
-)} 
-            
+            {session && (
+              <Box ml={"auto"}>
+                <Link href="/">
+                  <Typography variant="h6" component="div">
+                    <Box ml={1} onClick={() => signOut()}>
+                      logout
+                    </Box>
+                  </Typography>
+                </Link>
+              </Box>
+            )}
           </Box>
           {/* <Button color="inherit">Login</Button>
           <LogoutIcon /> */}

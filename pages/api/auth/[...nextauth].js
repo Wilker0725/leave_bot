@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
-import { hashPassword, verifyPassword } from "../../../backend/utils/auth";
+import { hashPassword, verifyPassword } from "@/backend/utils/auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { Session } from "inspector";
 
 let userAccount = null;
 
@@ -14,15 +13,12 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
-    // maxAge: 1 * 24 * 60 * 60, //1 days
   },
   jwt: {
     // The maximum age of the NextAuth.js issued JWT in seconds.
     // Defaults to `session.maxAge`.
     secret: process.env.NEXTAUTH_SECRET,
-
     maxAge: 1 * 24 * 60 * 60, //1 day
-
   },
   providers: [
     CredentialsProvider({
@@ -31,15 +27,15 @@ export default NextAuth({
       credentials: {},
       async authorize(credentials, req) {
         try {
-          const user = await prisma.admin.findFirst({
+          const user = await prisma.admins.findFirst({
             where: {
               email: credentials.email,
             },
           });
 
+          // const hashpwd = await hashPassword("123456");
+          // console.log("hashpwdsss:", hashpwd);
           if (user !== null) {
-         //   const hashpwd = await hashPassword("govtechadmin");
-
             //Compare the hash
             const res = await verifyPassword(
               credentials.password,
@@ -53,7 +49,7 @@ export default NextAuth({
                 isActive: user.is_active,
                 authorized: user.authorized,
               };
-              //  console.log(userAccount)
+
               return userAccount;
             } else {
               console.log("Hash not matched logging in");
@@ -71,7 +67,6 @@ export default NextAuth({
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signin",
-  
   },
   callbacks: {
     async signIn(user, account, profile) {
@@ -80,10 +75,6 @@ export default NextAuth({
         user = user.user;
 
         if (typeof user.userId !== typeof undefined) {
-          // if(user.authorized == false){
-          //    isNewUser ==true
-          // }
-
           if (user.isActive === true) {
             console.log("User is active");
             return user;
@@ -121,11 +112,8 @@ export default NextAuth({
       return session;
     },
     async jwt(token, user, account, profile, isNewUser) {
-
-
       if (typeof user !== typeof undefined) {
         token.user = user;
-
       }
 
       return token;
