@@ -12,7 +12,7 @@ const Welcome = () => {
 
   return (
     <Container>
-      <Box component={"h3"}>Welcome!</Box>
+      <Box component={"h3"}>Welcome ! </Box>
       <Typography>{today}</Typography>
       <Grid container mt={4} spacing={2}>
         <Grid item xs={12} md={4}>

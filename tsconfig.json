@@ -33,6 +33,6 @@
     "pages/projects/[id].js",
     "features/users/usersApiSlice.js",
     "pages/api/users/index.js"
-  ],
+, "pages/changePassword.js"  ],
   "exclude": ["node_modules"]
 }

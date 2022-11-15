@@ -1,24 +1,32 @@
-import "@fontsource/roboto/300.css"
-import "@fontsource/roboto/400.css"
-import "@fontsource/roboto/500.css"
-import "@fontsource/roboto/700.css"
-import "@/styles/globals.css"
-import type { AppProps } from "next/app"
-import { store } from "@/app/store"
-import { Provider } from "react-redux"
-import Layout from "@/components/Layout"
-import Prefetch from "@/features/auth/Prefetch"
+import type { AppProps } from "next/app";
+import { store } from "@/app/store";
+import { Provider } from "react-redux";
+import Layout from "@/components/Layout";
+import Prefetch from "@/features/auth/Prefetch";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 
-function MyApp({ Component, pageProps }: AppProps) {
+import "@/styles/globals.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{ session: Session }>): JSX.Element {
   return (
-    <Provider store={store}>
-      <Layout>
-        <Prefetch>
-          <Component {...pageProps} />
-        </Prefetch>
-      </Layout>
-    </Provider>
-  )
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <Layout>
+          <Prefetch>
+            <Component {...pageProps} />
+          </Prefetch>
+        </Layout>
+      </Provider>
+    </SessionProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

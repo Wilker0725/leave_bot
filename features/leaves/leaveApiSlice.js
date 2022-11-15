@@ -39,42 +39,12 @@ export const leavesApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
-            { type: "Leaves", id: "LIST" },
-            ...result.ids.map((id) => ({ type: "Leaves", id })),
+            { type: "Leave", id: "LIST" },
+            ...result.ids.map((id) => ({ type: "Leave", id })),
           ];
-        } else return [{ type: "Leaves", id: "LIST" }];
+        } else return [{ type: "Leave", id: "LIST" }];
       },
     }),
-    // addNewUser: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/api/users",
-    //     method: "POST",
-    //     body: {
-    //       ...data,
-    //     },
-    //   }),
-    //   invalidatesTags: [{ type: "User", id: "LIST" }],
-    // }),
-    // updateUser: builder.mutation({
-    //   query: (data) => {
-    //     return {
-    //       url: `/api/users/${data.id}`,
-    //       method: "PUT",
-    //       body: {
-    //         ...data,
-    //       },
-    //     }
-    //   },
-    //   invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
-    // }),
-    // deleteUser: builder.mutation({
-    //   query: ({ id }) => ({
-    //     url: `/api/users/${id}`,
-    //     method: "DELETE",
-    //     body: { id },
-    //   }),
-    //   invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
-    // }),
   }),
   overrideExisting: true,
 });
